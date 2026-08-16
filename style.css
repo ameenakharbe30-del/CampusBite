@@ -1,0 +1,254 @@
+
+body {
+    margin: 0;
+    background-color: #f7f7f5;
+    color: #222;
+    font-family: Arial, sans-serif;
+}
+
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 8%;
+
+    background-color: white;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    margin: 0;
+    font-size: 22px;
+}
+
+.orders-link {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+}
+
+
+/* ---------- Hero ---------- */
+
+.hero {
+    padding: 90px 8%;
+
+    background-color: #eeeeeb;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.welcome,
+.section-label {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #777;
+}
+
+.hero h1 {
+    font-size: 64px;
+    line-height: 1.05;
+    margin: 15px 0;
+}
+
+.hero h1 span {
+    color: #555;
+}
+
+.hero-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #666;
+    max-width: 500px;
+}
+
+.menu-button {
+    display: inline-block;
+
+    margin-top: 20px;
+    padding: 14px 24px;
+
+    background-color: #222;
+    color: white;
+
+    text-decoration: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+.menu-button:hover {
+    background-color: #444;
+}
+
+
+/* ---------- Categories ---------- */
+
+.categories {
+    padding: 70px 8%;
+}
+
+.categories h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.category-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.category {
+    width: 220px;
+
+    padding: 25px;
+
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+}
+
+.category-icon {
+    font-size: 32px;
+}
+
+.category h3 {
+    margin-bottom: 5px;
+}
+
+.category p {
+    color: #777;
+    margin: 0;
+}
+
+
+/* ---------- Menu ---------- */
+
+.menu-section {
+    padding: 70px 8%;
+    background-color: white;
+}
+
+.menu-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.menu-heading h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.menu-note {
+    color: #777;
+}
+
+
+/* ---------- Food Cards ---------- */
+
+.food-container {
+    display: flex;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.food-item {
+    width: 300px;
+
+    background-color: #f8f8f8;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.food-image {
+    height: 150px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #eeeeeb;
+
+    font-size: 60px;
+}
+
+.food-details {
+    padding: 20px;
+}
+
+.food-details h3 {
+    margin-top: 0;
+}
+
+.food-details p {
+    color: #777;
+    line-height: 1.5;
+}
+
+.food-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+}
+
+.food-bottom strong {
+    font-size: 20px;
+}
+
+.food-bottom button {
+    padding: 9px 15px;
+
+    border: none;
+    border-radius: 7px;
+
+    background-color: #222;
+    color: white;
+
+    cursor: pointer;
+}
+
+.food-bottom button:hover {
+    background-color: #444;
+}
+
+
+/* ---------- Orders ---------- */
+
+.orders-section {
+    padding: 70px 8%;
+    text-align: center;
+}
+
+.orders-section p {
+    color: #777;
+}
+
+
+/* ---------- Footer ---------- */
+
+footer {
+    padding: 35px 8%;
+
+    background-color: #222;
+    color: white;
+
+    text-align: center;
+}
+
+footer p {
+    color: #aaa;
+}
