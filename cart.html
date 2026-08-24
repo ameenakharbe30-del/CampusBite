@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Cart - KMES Canteen</title>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <h2 class="logo">
+            KMES Canteen
+        </h2>
+
+        <a href="index.html" class="back">
+            ← Back to Menu
+        </a>
+
+    </nav>
+
+
+    <!-- Cart Page -->
+
+    <main class="cart">
+
+        <p class="label">
+            YOUR ORDER
+        </p>
+
+        <h1>
+            Your Cart
+        </h1>
+
+        <p class="cart-text">
+            Review your items before placing your order.
+        </p>
+
+
+        <div class="cart-layout">
+
+
+            <!-- LEFT SIDE -->
+
+            <section class="cart-box">
+
+                <div class="cart-heading">
+
+                    <div>
+
+                        <h2>
+                            Your Items
+                        </h2>
+
+                        <p id="cart-canteen">
+                            Canteen: -
+                        </p>
+
+                    </div>
+
+
+                    <span id="item-count">
+                        0 items
+                    </span>
+
+                </div>
+
+
+                <div id="cart-items">
+
+                    <p class="empty">
+                        Your cart is empty.
+                    </p>
+
+                </div>
+
+
+                <!-- CLEAR CART -->
+
+                <button
+                    class="clear-cart"
+                    onclick="clearCart()">
+
+                    Clear Cart
+
+                </button>
+
+            </section>
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <section class="bill">
+
+                <h2>
+                    Bill Details
+                </h2>
+
+
+                <div class="bill-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₹<span id="subtotal">0</span>
+                    </span>
+
+                </div>
+
+
+                <div class="bill-row">
+
+                    <span>
+                        Service Fee
+                    </span>
+
+                    <span>
+                        ₹0
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="bill-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹<span id="total">0</span>
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="checkout"
+                    onclick="goToCheckout()">
+
+                    Proceed to Checkout
+
+                </button>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

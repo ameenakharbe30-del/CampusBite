@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Checkout - KMES Canteen</title>
+
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <h2 class="logo">
+            KMES Canteen
+        </h2>
+
+        <a href="cart.html" class="back">
+            ← Back to Cart
+        </a>
+
+    </nav>
+
+
+
+    <!-- Checkout -->
+
+    <main class="checkout-page">
+
+        <p class="label">
+            CHECKOUT
+        </p>
+
+        <h1>
+            Complete Your Order
+        </h1>
+
+        <p class="checkout-text">
+            Enter your details and choose your payment method.
+        </p>
+
+
+
+        <div class="checkout-layout">
+
+
+            <!-- Left Side -->
+
+            <section class="details">
+
+                <h2>Delivery Details</h2>
+
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                >
+
+
+                <label>
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                >
+
+
+                <label>
+                    Pickup Location
+                </label>
+
+                <select id="location">
+
+                    <option value="">
+                        Select pickup location
+                    </option>
+
+                    <option>
+                        Main Canteen
+                    </option>
+
+                    <option>
+                        College Building
+                    </option>
+
+                </select>
+
+
+
+                <h2 class="payment-title">
+                    Payment Method
+                </h2>
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="upi"
+                    >
+
+                    <span>
+                        📱 UPI
+                    </span>
+
+                </label>
+
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="cash"
+                    >
+
+                    <span>
+                        💵 Pay at Canteen
+                    </span>
+
+                </label>
+
+
+                <button
+                    class="place-order"
+                    onclick="placeOrder()"
+                >
+                    Place Order
+                </button>
+
+            </section>
+
+
+
+            <!-- Right Side -->
+
+            <section class="order-box">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div id="checkout-items">
+
+                    <!-- Items will appear here -->
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₹<span id="checkout-total">0</span>
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Service Fee
+                    </span>
+
+                    <span>
+                        ₹0
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="final-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹<span id="final-total">0</span>
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

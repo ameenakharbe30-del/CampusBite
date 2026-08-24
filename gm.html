@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>GM College Canteen</title>
+
+</head>
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <h2 class="logo">
+            GM College Canteen
+        </h2>
+
+        <a href="cart.html" class="cart-link">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+    </nav>
+
+
+
+    <!-- Menu Heading -->
+
+    <section class="menu-top">
+
+        <p class="section-label">
+            GM COLLEGE CANTEEN
+        </p>
+
+        <h1>
+            Today's Menu
+        </h1>
+
+        <p>
+            Freshly available today
+        </p>
+
+    </section>
+
+
+
+    <!-- Menu -->
+
+    <section class="menu-section">
+
+        <div class="food-container">
+
+
+            <!-- Chicken Samosa -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🥟
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Chicken Samosa
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹20</strong>
+
+                        <button onclick="addToCart('Chicken Samosa', 20, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Vada Pav -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🍔
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Vada Pav
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹15</strong>
+
+                        <button onclick="addToCart('Vada Pav', 15, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Tea -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    ☕
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Tea
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹12</strong>
+
+                        <button onclick="addToCart('Tea', 12, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Coffee -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    ☕
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Coffee
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹20</strong>
+
+                        <button onclick="addToCart('Coffee', 20, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Veg Sandwich -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🥪
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Veg Sandwich
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹40</strong>
+
+                        <button onclick="addToCart('Veg Sandwich', 30, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Chicken Sandwich -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🥪
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Chicken Sandwich
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹30</strong>
+
+                        <button onclick="addToCart('Chicken Sandwich', 60, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Idli -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🍚
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Idli
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹30</strong>
+
+                        <button onclick="addToCart('Idli', 30, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Water -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    💧
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Water
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹10</strong>
+
+                        <button onclick="addToCart('Water', 10, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Biscuits -->
+
+            <div class="food-item">
+
+                <div class="food-image">
+                    🍪
+                </div>
+
+                <div class="food-details">
+
+                    <h3>
+                        Biscuits
+                    </h3>
+
+                    <div class="food-bottom">
+
+                        <strong>₹10</strong>
+
+                        <button onclick="addToCart('Biscuits', 10, 'GM College Canteen')">
+                            Add +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+  <footer>
+    <div class="footer-content">
+
+        <h3>KMES Campus Canteen</h3>
+
+        <p>
+            A simple and convenient way to order food on campus.
+        </p>
+
+        <p class="footer-bottom">
+            © 2026 KMES Campus Canteen | All Rights Reserved
+        </p>
+
+    </div>
+</footer>
+
+    </footer>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+```
