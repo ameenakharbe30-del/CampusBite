@@ -707,10 +707,22 @@ function placeOrder() {
     };
 
 
-    localStorage.setItem(
-        "lastOrder",
-        JSON.stringify(order)
-    );
+    let orders =
+    JSON.parse(localStorage.getItem("orders")) || [];
+
+orders.push(order);
+
+localStorage.setItem(
+    "orders",
+    JSON.stringify(orders)
+);
+
+localStorage.setItem(
+    "lastOrder",
+    JSON.stringify(order)
+);
+
+
 
 
     localStorage.setItem(
@@ -779,3 +791,237 @@ showCart();
 showCheckout();
 
 showOrderId();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------- Show Order Details ---------- */
+
+function showOrderDetails() {
+
+    let order = JSON.parse(
+        localStorage.getItem("lastOrder")
+    );
+
+    if (!order) {
+        return;
+    }
+
+    // Order information
+
+    document.getElementById("order-id").textContent =
+        order.orderId;
+
+    document.getElementById("canteen").textContent =
+        order.canteen;
+
+    document.getElementById("customer").textContent =
+        order.name;
+
+    document.getElementById("phone").textContent =
+        order.phone;
+
+    document.getElementById("order-type").textContent =
+        order.location;
+
+    document.getElementById("payment").textContent =
+        order.payment;
+
+
+    // Items
+
+    let items =
+        document.getElementById("order-items");
+
+    items.innerHTML = "";
+
+    let total = 0;
+
+
+    order.items.forEach(function(item) {
+
+        let itemTotal =
+            Number(item.price) *
+            Number(item.quantity);
+
+        total = total + itemTotal;
+
+
+        items.innerHTML += `
+
+            <div class="order-item">
+
+                <span>
+                    ${item.name} × ${item.quantity}
+                </span>
+
+                <strong>
+                    ₹${itemTotal}
+                </strong>
+
+            </div>
+
+        `;
+    });
+
+
+    // Total
+
+    document.getElementById("order-total").textContent =
+        total;
+}
+
+
+// Run on order details page
+
+if (document.getElementById("order-items")) {
+    showOrderDetails();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function showOrders() {
+
+    let orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+    let list =
+        document.getElementById("orders-list");
+
+    if (!list) {
+        return;
+    }
+
+
+    if (orders.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="empty-order">
+
+                <h2>No orders yet</h2>
+
+                <p>
+                    Your placed orders will appear here.
+                </p>
+
+                <a href="index.html">
+                    Order Food
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    orders.slice().reverse().forEach(function(order) {
+
+        let items = "";
+
+
+        order.items.forEach(function(item) {
+
+            items += `
+                <p>
+                    ${item.name} × ${item.quantity}
+                </p>
+            `;
+
+        });
+
+
+        list.innerHTML += `
+
+            <div class="order-box">
+
+                <div class="order-top">
+
+                    <div>
+
+                        <span>Order ID</span>
+
+                        <strong>
+                            #${order.orderId}
+                        </strong>
+
+                    </div>
+
+                    <span class="status">
+                        ${order.status}
+                    </span>
+
+                </div>
+
+
+                <div class="order-canteen">
+
+                    <strong>
+                        ${order.canteen}
+                    </strong>
+
+                </div>
+
+
+                <div class="order-items">
+
+                    ${items}
+
+                </div>
+
+
+                <div class="order-bottom">
+
+                    <strong>
+                        ₹${order.total}
+                    </strong>
+
+                    <a href="order-details.html">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+if (document.getElementById("orders-list")) {
+
+    showOrders();
+
+}
+
