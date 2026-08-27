@@ -701,7 +701,7 @@ function placeOrder() {
             },
             0
         ),
-
+ status: "Order Placed",
         date: new Date().toLocaleString()
 
     };
