@@ -14,7 +14,6 @@
 
 <body>
 
-
     <!-- Navigation -->
 
     <nav class="navbar">
@@ -23,10 +22,18 @@
             KMES Canteen
         </h2>
 
-        <a href="cart.html" class="cart-link">
-            🛒 Cart
-            <span id="cart-count">0</span>
-        </a>
+        <div class="nav-right">
+
+            <a href="orders.html" class="orders-link">
+                My Orders
+            </a>
+
+            <a href="cart.html" class="cart-link">
+                🛒 Cart
+                <span id="cart-count">0</span>
+            </a>
+
+        </div>
 
     </nav>
 
@@ -56,167 +63,179 @@
         </div>
 
 
+        <!-- Food Items from Django API -->
 
-        <!-- Food Items -->
+        <div
+            class="food-container"
+            id="food-container">
 
-        <div class="food-container">
-
-
-            <!-- Dhokla -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🟨
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Dhokla
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>
-                            ₹20
-                        </strong>
-
-<button onclick="addToCart('Dhokla', 20, 'KMES Canteen')">
-    Add +
-</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Samosa -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🥟
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Samosa
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>
-                            ₹12
-                        </strong>
-
-                        <button onclick="addToCart('Samosa', 12,'KMES Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Vada Pav -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🍔
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Vada Pav
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>
-                            ₹12
-                        </strong>
-
-                        <button onclick="addToCart('Vada Pav', 12,'KMES Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Noodles -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🍜
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Noodles
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>
-                            ₹40
-                        </strong>
-
-                        <button onclick="addToCart('Noodles', 40,'KMES Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            <p>
+                Loading menu...
+            </p>
 
         </div>
 
     </section>
 
 
-
     <!-- Footer -->
 
     <footer>
-    <div class="footer-content">
 
-        <h3>KMES Campus Canteen</h3>
+        <div class="footer-content">
 
-        <p>
-            A simple and convenient way to order food on campus.
-        </p>
+            <h3>
+                KMES Campus Canteen
+            </h3>
 
-        <p class="footer-bottom">
-            © 2026 KMES Campus Canteen | All Rights Reserved
-        </p>
+            <p>
+                A simple and convenient way to order food on campus.
+            </p>
 
-    </div>
-</footer>
+            <p class="footer-bottom">
+                © 2026 KMES Campus Canteen |
+                All Rights Reserved
+            </p>
+
+        </div>
+
+    </footer>
 
 
+    <!-- Your JavaScript -->
 
     <script src="script.js"></script>
+
+
+    <!-- Load Menu From Django -->
+
+    <script>
+
+        async function loadKMESMenu() {
+
+            const container =
+                document.getElementById("food-container");
+
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/kmes-menu/"
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load menu"
+                    );
+
+                }
+
+
+                const items =
+                    await response.json();
+
+
+                container.innerHTML = "";
+
+
+                if (items.length === 0) {
+
+                    container.innerHTML = `
+                        <p>
+                            No menu items available today.
+                        </p>
+                    `;
+
+                    return;
+
+                }
+
+
+                items.forEach(function(item) {
+
+                    const foodItem =
+                        document.createElement("div");
+
+                    foodItem.className =
+                        "food-item";
+
+
+                    foodItem.innerHTML = `
+
+                        <div class="food-image">
+                            🍽️
+                        </div>
+
+
+                        <div class="food-details">
+
+                            <h3>
+                                ${item.name}
+                            </h3>
+
+
+                            <div class="food-bottom">
+
+                                <strong>
+                                    ₹${item.price}
+                                </strong>
+
+
+                                <button
+                                    class="add-button"
+                                    onclick="addToCart(
+    ${item.id},
+    '${item.name}',
+    ${item.price},
+    '${item.canteen}'
+)">
+
+                                    Add +
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(foodItem);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Menu loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <p>
+                        Unable to load menu.
+                        Please make sure the Django
+                        server is running.
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        loadKMESMenu();
+
+    </script>
+
 
 </body>
 
 </html>
-```

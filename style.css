@@ -1689,3 +1689,94 @@ footer p {
     color: white;
 }
 
+
+
+
+
+/* ===============================
+   WORKER DASHBOARD
+================================ */
+
+.worker-dashboard {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 40px;
+}
+
+
+.worker-card {
+
+    background: white;
+
+    border: 1px solid #eadfd5;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.05);
+
+}
+
+
+.worker-icon {
+
+    font-size: 35px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.worker-card h2 {
+
+    margin-bottom: 10px;
+
+}
+
+
+.worker-card p {
+
+    color: #666;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+
+}
+
+
+.worker-card a {
+
+    color: #d95b00;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+}
+
+
+.worker-card a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+@media (max-width: 800px) {
+
+    .worker-dashboard {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

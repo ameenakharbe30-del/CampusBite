@@ -57,65 +57,51 @@ function updateCartCount() {
 // ADD TO CART
 // ===============================
 
-function addToCart(name, price, canteen) {
+function addToCart(id, name, price, canteen) {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-
-    // Check if another canteen is already in cart
-
+    // Only one canteen per order
     if (cart.length > 0 && cart[0].canteen !== canteen) {
 
         showMessage(
-            "Your cart contains items from " +
-            cart[0].canteen +
-            ". Please clear your cart before ordering from " +
-            canteen + "."
+            "You can only order from one canteen at a time."
         );
 
         return;
     }
 
-
     // Check if item already exists
-
-    let item = cart.find(function(item) {
-
-        return item.name === name;
-
+    let existingItem = cart.find(function(item) {
+        return item.id === id;
     });
 
+    if (existingItem) {
 
-    if (item) {
-
-        item.quantity = item.quantity + 1;
+        existingItem.quantity++;
 
     } else {
 
         cart.push({
-
+            id: id,
             name: name,
-
             price: Number(price),
-
             quantity: 1,
-
             canteen: canteen
-
         });
 
     }
-
 
     localStorage.setItem(
         "cart",
         JSON.stringify(cart)
     );
 
-
     updateCartCount();
 
-    showMessage(name + " added to cart");
+    showMessage(
+        name + " added to cart"
+    );
 }
 
 
@@ -592,31 +578,23 @@ function showCheckout() {
 // ===============================
 // PLACE ORDER
 // ===============================
+async function placeOrder() {
 
-function placeOrder() {
+    let name = document.getElementById("name");
+    let phone = document.getElementById("phone");
+    let location = document.getElementById("location");
 
-    let name =
-        document.getElementById("name");
-
-
-    let phone =
-        document.getElementById("phone");
-
-
-    let location =
-        document.getElementById("location");
+    let payment = document.querySelector(
+        'input[name="payment"]:checked'
+    );
 
 
-    let payment =
-        document.querySelector(
-            'input[name="payment"]:checked'
-        );
-
+    // =========================
+    // CHECK INPUT FIELDS
+    // =========================
 
     if (!name || !phone || !location) {
-
         return;
-
     }
 
 
@@ -631,9 +609,12 @@ function placeOrder() {
         );
 
         return;
-
     }
 
+
+    // =========================
+    // CHECK PAYMENT
+    // =========================
 
     if (!payment) {
 
@@ -642,12 +623,20 @@ function placeOrder() {
         );
 
         return;
-
     }
 
 
+    // =========================
+    // GET CART
+    // =========================
+
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    console.log("Cart:", cart);
 
 
     if (cart.length === 0) {
@@ -657,93 +646,209 @@ function placeOrder() {
         );
 
         return;
-
     }
 
 
-    // Generate order ID
+    // =========================
+    // GET CANTEEN
+    // =========================
 
-    let orderNumber =
-        Math.floor(
-            100 + Math.random() * 900
-        );
-
-
-    let orderId =
-        "#" + orderNumber;
+    let canteen =
+        cart[0].canteen;
 
 
-    // Save order
+    console.log(
+        "Canteen:",
+        canteen
+    );
 
-    let order = {
 
-        orderId: orderId,
+    // =========================
+    // CONVERT PAYMENT
+    // =========================
 
-        name: name.value,
+let paymentValue = payment.value;
 
-        phone: phone.value,
+    // =========================
+    // CREATE DATA FOR DJANGO
+    // =========================
+
+    let orderData = {
+
+        name: name.value.trim(),
+
+        phone: phone.value.trim(),
 
         location: location.value,
 
-        payment: payment.value,
+        payment: paymentValue,
 
-        canteen: cart[0].canteen,
+        canteen: canteen,
 
-        items: cart,
+        items: cart.map(function(item) {
 
-        total: cart.reduce(
-            function(sum, item) {
+            return {
 
-                return sum +
-                    Number(item.price) *
-                    Number(item.quantity);
+                id: item.id,
 
-            },
-            0
-        ),
- status: "Order Placed",
-        date: new Date().toLocaleString()
+                quantity: item.quantity
+
+            };
+
+        })
 
     };
 
 
-    let orders =
-    JSON.parse(localStorage.getItem("orders")) || [];
+    console.log(
+        "Sending to Django:",
+        orderData
+    );
 
-orders.push(order);
 
-localStorage.setItem(
-    "orders",
-    JSON.stringify(orders)
-);
+    // =========================
+    // SEND ORDER TO DJANGO
+    // =========================
 
+    try {
+
+        let response = await fetch(
+            "http://127.0.0.1:8000/api/create-order/",
+            {
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        orderData
+                    )
+
+            }
+        );
+
+
+        let result =
+            await response.json();
+
+
+        console.log(
+            "Django response:",
+            result
+        );
+
+
+        // =========================
+        // CHECK DJANGO RESPONSE
+        // =========================
+
+        if (!response.ok) {
+
+            showMessage(
+                result.error ||
+                "Failed to place order."
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // CREATE FRONTEND ORDER
+        // =========================
+
+let order = {
+
+    orderId:
+        "#" + result.order_id,
+
+    name:
+        name.value.trim(),
+
+    phone:
+        phone.value.trim(),
+
+    location:
+        location.value,
+
+    payment:
+        paymentValue,
+
+    canteen:
+        canteen,
+
+    items:
+        cart,
+
+    total:
+        result.total,
+
+    status:
+        result.status,
+
+    date:
+        new Date().toLocaleString()
+
+};
+
+
+// SAVE ORDER
 localStorage.setItem(
     "lastOrder",
     JSON.stringify(order)
 );
 
 
+// SAVE CUSTOMER PHONE
+localStorage.setItem(
+    "customerPhone",
+    phone.value.trim()
+);
 
 
-    localStorage.setItem(
-        "orderId",
-        orderId
-    );
+// CLEAR CART
+localStorage.removeItem("cart");
+
+updateCartCount();
 
 
-    // Clear cart
-
-    localStorage.removeItem("cart");
-
-
-    updateCartCount();
+// GO TO ORDER DETAILS
+window.location.href =
+    "order-details.html";
 
 
-    // Go to success page
+    } catch (error) {
 
-    window.location.href =
-        "order-success.html";
+        console.error(
+            "Connection error:",
+            error
+        );
+
+
+        showMessage(
+            "Cannot connect to Django server."
+        );
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ===============================
@@ -827,8 +932,8 @@ function showOrderDetails() {
     document.getElementById("canteen").textContent =
         order.canteen;
 
-    document.getElementById("customer").textContent =
-        order.name;
+document.getElementById("customer").textContent =
+    order.name;
 
     document.getElementById("phone").textContent =
         order.phone;
@@ -903,12 +1008,10 @@ if (document.getElementById("order-items")) {
 
 
 
-function showOrders() {
 
-    let orders =
-        JSON.parse(localStorage.getItem("orders")) || [];
+async function showOrders() {
 
-    let list =
+    const list =
         document.getElementById("orders-list");
 
     if (!list) {
@@ -916,16 +1019,25 @@ function showOrders() {
     }
 
 
-    if (orders.length === 0) {
+    // Get phone number saved when order was placed
+    const phone =
+        localStorage.getItem("customerPhone");
+
+
+    console.log("Customer phone:", phone);
+
+
+    if (!phone) {
 
         list.innerHTML = `
-
             <div class="empty-order">
 
-                <h2>No orders yet</h2>
+                <h2>
+                    No customer information found
+                </h2>
 
                 <p>
-                    Your placed orders will appear here.
+                    Please place an order first.
                 </p>
 
                 <a href="index.html">
@@ -933,88 +1045,187 @@ function showOrders() {
                 </a>
 
             </div>
-
         `;
 
         return;
     }
 
 
-    list.innerHTML = "";
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/my-orders/?phone="
+            + encodeURIComponent(phone)
+        );
 
 
-    orders.slice().reverse().forEach(function(order) {
+        const orders =
+            await response.json();
 
-        let items = "";
+
+        console.log(
+            "DJANGO ORDERS:",
+            orders
+        );
 
 
-        order.items.forEach(function(item) {
+        if (!response.ok) {
 
-            items += `
-                <p>
-                    ${item.name} × ${item.quantity}
-                </p>
+            throw new Error(
+                orders.error ||
+                "Could not load orders"
+            );
+
+        }
+
+
+        if (
+            !Array.isArray(orders) ||
+            orders.length === 0
+        ) {
+
+            list.innerHTML = `
+                <div class="empty-order">
+
+                    <h2>
+                        No orders yet
+                    </h2>
+
+                    <p>
+                        Your placed orders will appear here.
+                    </p>
+
+                    <a href="index.html">
+                        Order Food
+                    </a>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        list.innerHTML = "";
+
+
+        orders.forEach(function(order) {
+
+            let items = "";
+
+
+            if (
+                order.items &&
+                order.items.length > 0
+            ) {
+
+                order.items.forEach(function(item) {
+
+                    items += `
+                        <p>
+                            ${item.name}
+                            × ${item.quantity}
+                        </p>
+                    `;
+
+                });
+
+            } else {
+
+                items = `
+                    <p>
+                        No items found.
+                    </p>
+                `;
+
+            }
+
+
+            list.innerHTML += `
+
+                <div class="order-box">
+
+                    <div class="order-top">
+
+                        <div>
+
+                            <span>
+                                Order ID
+                            </span>
+
+                            <strong>
+                                #${order.id}
+                            </strong>
+
+                        </div>
+
+
+                        <span class="status">
+                            ${order.status}
+                        </span>
+
+                    </div>
+
+
+                    <div class="order-canteen">
+
+                        <strong>
+                            ${order.canteen}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="order-items">
+
+                        ${items}
+
+                    </div>
+
+
+                    <div class="order-bottom">
+
+                        <strong>
+                            ₹${order.total}
+                        </strong>
+
+
+                        <a href="order-details.html">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
             `;
 
         });
 
 
-        list.innerHTML += `
+    } catch (error) {
 
-            <div class="order-box">
-
-                <div class="order-top">
-
-                    <div>
-
-                        <span>Order ID</span>
-
-                        <strong>
-                            #${order.orderId}
-                        </strong>
-
-                    </div>
-
-                    <span class="status">
-                        ${order.status}
-                    </span>
-
-                </div>
+        console.error(
+            "Orders loading error:",
+            error
+        );
 
 
-                <div class="order-canteen">
+        list.innerHTML = `
+            <div class="empty-order">
 
-                    <strong>
-                        ${order.canteen}
-                    </strong>
+                <h2>
+                    Unable to load orders
+                </h2>
 
-                </div>
-
-
-                <div class="order-items">
-
-                    ${items}
-
-                </div>
-
-
-                <div class="order-bottom">
-
-                    <strong>
-                        ₹${order.total}
-                    </strong>
-
-                    <a href="order-details.html">
-                        View Details
-                    </a>
-
-                </div>
+                <p>
+                    ${error.message}
+                </p>
 
             </div>
-
         `;
 
-    });
+    }
 
 }
 
@@ -1024,4 +1235,9 @@ if (document.getElementById("orders-list")) {
     showOrders();
 
 }
+
+
+
+
+
 

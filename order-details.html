@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,17 +15,24 @@
 
 </head>
 
+
 <body>
 
 
-    <!-- Navigation -->
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
 
     <nav class="navbar">
 
         <h2 class="logo">
-            <a href="index.html" class="black">  KMES Campus Canteen </a>
- 
+
+            <a href="index.html" class="black">
+                KMES Campus Canteen
+            </a>
+
         </h2>
+
 
         <a href="index.html" class="back">
             ← Back to Home
@@ -36,9 +42,14 @@
 
 
 
-    <!-- Order Details -->
+    <!-- =========================
+         ORDER DETAILS PAGE
+    ========================== -->
 
     <main class="order-page">
+
+
+        <!-- SUCCESS MESSAGE -->
 
         <div class="order-success">
 
@@ -46,24 +57,31 @@
                 ✓
             </div>
 
+
             <p class="label">
                 ORDER CONFIRMED
             </p>
+
 
             <h1>
                 Your Order is Placed!
             </h1>
 
+
             <p class="order-message">
+
                 Thank you for ordering from the canteen.
                 Your order has been successfully placed.
+
             </p>
 
         </div>
 
 
 
-        <!-- Order Information -->
+        <!-- =========================
+             ORDER INFORMATION
+        ========================== -->
 
         <section class="order-card">
 
@@ -74,52 +92,101 @@
 
             <div class="order-info">
 
+
+                <!-- ORDER ID -->
+
                 <div>
-                    <span>Order ID</span>
+
+                    <span>
+                        Order ID
+                    </span>
+
                     <strong id="order-id">
                         -
                     </strong>
+
                 </div>
 
 
+
+                <!-- CANTEEN -->
+
                 <div>
-                    <span>Canteen</span>
+
+                    <span>
+                        Canteen
+                    </span>
+
                     <strong id="canteen">
                         -
                     </strong>
+
                 </div>
 
 
+
+                <!-- CUSTOMER -->
+
                 <div>
-                    <span>Customer</span>
+
+                    <span>
+                        Customer
+                    </span>
+
                     <strong id="customer">
                         -
                     </strong>
+
                 </div>
 
 
+
+                <!-- PHONE -->
+
                 <div>
-                    <span>Phone</span>
+
+                    <span>
+                        Phone
+                    </span>
+
                     <strong id="phone">
                         -
                     </strong>
+
                 </div>
 
 
+
+                <!-- ORDER TYPE / LOCATION -->
+
                 <div>
-                    <span>Order Type</span>
+
+                    <span>
+                        Order Type
+                    </span>
+
                     <strong id="order-type">
                         -
                     </strong>
+
                 </div>
 
 
+
+                <!-- PAYMENT -->
+
                 <div>
-                    <span>Payment</span>
+
+                    <span>
+                        Payment
+                    </span>
+
                     <strong id="payment">
                         -
                     </strong>
+
                 </div>
+
 
             </div>
 
@@ -127,9 +194,12 @@
 
 
 
-        <!-- Items -->
+        <!-- =========================
+             ITEMS ORDERED
+        ========================== -->
 
         <section class="order-card">
+
 
             <h2>
                 Items Ordered
@@ -148,23 +218,36 @@
             <hr>
 
 
+            <!-- TOTAL -->
+
             <div class="order-total">
 
                 <span>
                     Total Amount
                 </span>
 
+
                 <strong>
-                    ₹<span id="order-total">0</span>
+
+                    ₹<span id="order-total">
+                        0
+                    </span>
+
                 </strong>
 
             </div>
+
 
         </section>
 
 
 
+        <!-- =========================
+             BUTTONS
+        ========================== -->
+
         <div class="order-buttons">
+
 
             <a href="index.html"
                class="home-button">
@@ -174,12 +257,13 @@
             </a>
 
 
-            <a href="cart.html"
+            <a href="orders.html"
                class="orders-button">
 
-                View Cart
+                My Orders
 
             </a>
+
 
         </div>
 
@@ -188,9 +272,244 @@
 
 
 
+    <!-- =========================
+         MAIN JAVASCRIPT
+    ========================== -->
+
     <script src="script.js"></script>
+
+
+
+    <!-- =========================
+         DISPLAY ORDER
+    ========================== -->
+
+    <script>
+
+        /*
+         * Get the order saved by placeOrder()
+         */
+
+        const order =
+            JSON.parse(
+                localStorage.getItem("lastOrder")
+            );
+
+
+
+        /*
+         * Check whether an order exists
+         */
+
+        if (!order) {
+
+            console.log(
+                "No order found in localStorage."
+            );
+
+        } else {
+
+
+            /*
+             * ORDER ID
+             */
+
+            document.getElementById(
+                "order-id"
+            ).textContent =
+                order.orderId || "-";
+
+
+
+            /*
+             * CANTEEN
+             */
+
+            document.getElementById(
+                "canteen"
+            ).textContent =
+                order.canteen || "-";
+
+
+
+            /*
+             * CUSTOMER NAME
+             */
+
+            document.getElementById(
+                "customer"
+            ).textContent =
+                order.name || "-";
+
+
+
+            /*
+             * PHONE
+             */
+
+            document.getElementById(
+                "phone"
+            ).textContent =
+                order.phone || "-";
+
+
+
+            /*
+             * PICKUP LOCATION
+             */
+
+            document.getElementById(
+                "order-type"
+            ).textContent =
+                order.location || "-";
+
+
+
+            /*
+             * PAYMENT
+             */
+
+            document.getElementById(
+                "payment"
+            ).textContent =
+                order.payment || "-";
+
+
+
+            /*
+             * ITEMS
+             */
+
+            const itemsContainer =
+                document.getElementById(
+                    "order-items"
+                );
+
+
+            /*
+             * Clear "No items found"
+             */
+
+            itemsContainer.innerHTML = "";
+
+
+
+            /*
+             * Check items
+             */
+
+            if (
+                order.items &&
+                order.items.length > 0
+            ) {
+
+
+                order.items.forEach(
+                    function(item) {
+
+
+                        /*
+                         * Create item row
+                         */
+
+                        const itemDiv =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        itemDiv.className =
+                            "ordered-item";
+
+
+
+                        /*
+                         * Calculate item total
+                         */
+
+                        const itemTotal =
+                            Number(item.price) *
+                            Number(item.quantity);
+
+
+
+                        /*
+                         * Display item
+                         */
+
+                        itemDiv.innerHTML = `
+
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 12px 0;
+                                font-size: 17px;
+                            ">
+
+                                <span>
+                                    ${item.name}
+                                    ×
+                                    ${item.quantity}
+                                </span>
+
+                                <strong>
+                                    ₹${itemTotal.toFixed(2)}
+                                </strong>
+
+                            </div>
+
+                        `;
+
+
+
+                        /*
+                         * Add item to page
+                         */
+
+                        itemsContainer.appendChild(
+                            itemDiv
+                        );
+
+                    }
+                );
+
+
+            } else {
+
+
+                /*
+                 * No items
+                 */
+
+                itemsContainer.innerHTML = `
+
+                    <p>
+                        No items found.
+                    </p>
+
+                `;
+
+            }
+
+
+
+            /*
+             * TOTAL AMOUNT
+             */
+
+            document.getElementById(
+                "order-total"
+            ).textContent =
+                Number(
+                    order.total || 0
+                ).toFixed(2);
+
+        }
+
+    </script>
+
 
 </body>
 
 </html>
-```

@@ -1,22 +1,67 @@
-"""
-URL configuration for canteen_backend project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+from django.http import JsonResponse
+
+from orders.views import (
+    kmes_menu,
+    gm_menu,
+    create_order,
+    my_orders,
+    worker_orders,
+    update_order_status
+)
+
+
+def home(request):
+    return JsonResponse({
+        "message": "KMES Campus Canteen Backend is running!",
+        "available_urls": [
+            "/admin/",
+            "/api/kmes-menu/",
+            "/api/gm-menu/",
+            "/api/create-order/",
+            "/api/my-orders/",
+            "/api/worker-orders/",
+            "/api/update-order-status/"
+        ]
+    })
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+
+    path(
+        "admin/",
+        admin.site.urls
+    ),
+
+    path(
+        "api/kmes-menu/",
+        kmes_menu
+    ),
+
+    path(
+        "api/gm-menu/",
+        gm_menu
+    ),
+
+    path(
+        "api/create-order/",
+        create_order
+    ),
+
+    path(
+        "api/my-orders/",
+        my_orders
+    ),
+
+    path(
+        "api/worker-orders/",
+        worker_orders
+    ),
+
+    path(
+        "api/update-order-status/",
+        update_order_status
+    ),
+
 ]

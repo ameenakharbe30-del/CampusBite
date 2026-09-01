@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,21 +56,9 @@
 
         <div id="orders-list">
 
-            <div class="empty-order">
-
-                <h2>
-                    No orders yet
-                </h2>
-
-                <p>
-                    Your placed orders will appear here.
-                </p>
-
-                <a href="index.html">
-                    Order Food
-                </a>
-
-            </div>
+            <p>
+                Loading orders...
+            </p>
 
         </div>
 
@@ -81,6 +68,317 @@
 
 
     <script src="script.js"></script>
+
+
+    <!-- Load Orders From Django -->
+
+    <script>
+
+        async function loadOrders() {
+
+            const container =
+                document.getElementById("orders-list");
+
+
+            // Get customer phone number
+
+            const phone =
+                localStorage.getItem("customerPhone");
+
+
+            if (!phone) {
+
+                container.innerHTML = `
+
+                    <div class="empty-order">
+
+                        <h2>
+                            No orders found
+                        </h2>
+
+                        <p>
+                            Please place an order first.
+                        </p>
+
+                        <a href="index.html">
+                            Order Food
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:8000/api/my-orders/?phone="
+                        + encodeURIComponent(phone)
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load orders"
+                    );
+
+                }
+
+
+                const orders =
+                    await response.json();
+
+
+                container.innerHTML = "";
+
+
+                // No orders
+
+                if (orders.length === 0) {
+
+                    container.innerHTML = `
+
+                        <div class="empty-order">
+
+                            <h2>
+                                No orders yet
+                            </h2>
+
+                            <p>
+                                Your placed orders will appear here.
+                            </p>
+
+                            <a href="index.html">
+                                Order Food
+                            </a>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+
+                // Display orders
+
+                orders.forEach(function(order) {
+
+
+                    const orderCard =
+                        document.createElement("div");
+
+                    orderCard.className =
+                        "order-card";
+
+
+                    let itemsHTML = "";
+
+
+                    order.items.forEach(
+                        function(item) {
+
+                            itemsHTML += `
+
+                                <div class="order-item">
+
+                                    <span>
+                                        ${item.name}
+                                        × ${item.quantity}
+                                    </span>
+
+                                    <strong>
+                                        ₹${(
+                                            item.price *
+                                            item.quantity
+                                        ).toFixed(2)}
+                                    </strong>
+
+                                </div>
+
+                            `;
+
+                        }
+                    );
+
+
+                    orderCard.innerHTML = `
+
+                        <div class="order-header">
+
+                            <div>
+
+                                <span>
+                                    Order ID
+                                </span>
+
+                                <h2>
+                                    #${order.id}
+                                </h2>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    ${order.created_at}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="order-info">
+
+                            <div>
+
+                                <span>
+                                    Canteen
+                                </span>
+
+                                <strong>
+                                    ${order.canteen}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Customer
+                                </span>
+
+                                <strong>
+                                    ${order.customer_name}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Pickup Location
+                                </span>
+
+                                <strong>
+                                    ${order.location}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Payment
+                                </span>
+
+                                <strong>
+                                    ${order.payment}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="order-items">
+
+                            <h3>
+                                Items
+                            </h3>
+
+                            ${itemsHTML}
+
+                        </div>
+
+
+                        <div class="order-footer">
+
+                            <div>
+
+                                <span>
+                                    Status
+                                </span>
+
+                                <strong class="status">
+                                    ${order.status}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong class="order-price">
+                                    ₹${order.total.toFixed(2)}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(
+                        orderCard
+                    );
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Orders loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="empty-order">
+
+                        <h2>
+                            Unable to load orders
+                        </h2>
+
+                        <p>
+                            Please make sure the Django
+                            server is running.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        loadOrders();
+
+    </script>
+
 
 </body>
 

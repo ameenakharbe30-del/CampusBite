@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="style.css">
 
     <title>GM College Canteen</title>
 
@@ -21,14 +23,31 @@
     <nav class="navbar">
 
         <h2 class="logo">
-           <a href="index.html" class="black">   GM College Canteen </a>
- 
+
+            <a href="index.html" class="black">
+                GM College Canteen
+            </a>
+
         </h2>
 
-        <a href="cart.html" class="cart-link">
-            🛒 Cart
-            <span id="cart-count">0</span>
-        </a>
+
+        <div class="nav-right">
+
+            <a href="orders.html" class="orders-link">
+                My Orders
+            </a>
+
+            <a href="cart.html" class="cart-link">
+
+                🛒 Cart
+
+                <span id="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </div>
 
     </nav>
 
@@ -58,277 +77,13 @@
 
     <section class="menu-section">
 
-        <div class="food-container">
-
-
-            <!-- Chicken Samosa -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🥟
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Chicken Samosa
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹20</strong>
-
-                        <button onclick="addToCart('Chicken Samosa', 20, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Vada Pav -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🍔
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Vada Pav
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹15</strong>
-
-                        <button onclick="addToCart('Vada Pav', 15, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Tea -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    ☕
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Tea
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹12</strong>
-
-                        <button onclick="addToCart('Tea', 12, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Coffee -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    ☕
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Coffee
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹20</strong>
-
-                        <button onclick="addToCart('Coffee', 20, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Veg Sandwich -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🥪
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Veg Sandwich
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹40</strong>
-
-                        <button onclick="addToCart('Veg Sandwich', 30, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Chicken Sandwich -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🥪
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Chicken Sandwich
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹30</strong>
-
-                        <button onclick="addToCart('Chicken Sandwich', 60, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Idli -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🍚
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Idli
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹30</strong>
-
-                        <button onclick="addToCart('Idli', 30, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Water -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    💧
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Water
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹10</strong>
-
-                        <button onclick="addToCart('Water', 10, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Biscuits -->
-
-            <div class="food-item">
-
-                <div class="food-image">
-                    🍪
-                </div>
-
-                <div class="food-details">
-
-                    <h3>
-                        Biscuits
-                    </h3>
-
-                    <div class="food-bottom">
-
-                        <strong>₹10</strong>
-
-                        <button onclick="addToCart('Biscuits', 10, 'GM College Canteen')">
-                            Add +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div
+            class="food-container"
+            id="food-container">
+
+            <p>
+                Loading menu...
+            </p>
 
         </div>
 
@@ -338,21 +93,24 @@
 
     <!-- Footer -->
 
-  <footer>
-    <div class="footer-content">
+    <footer>
 
-        <h3>KMES Campus Canteen</h3>
+        <div class="footer-content">
 
-        <p>
-            A simple and convenient way to order food on campus.
-        </p>
+            <h3>
+                GM College Canteen
+            </h3>
 
-        <p class="footer-bottom">
-            © 2026 KMES Campus Canteen | All Rights Reserved
-        </p>
+            <p>
+                A simple and convenient way to order food on campus.
+            </p>
 
-    </div>
-</footer>
+            <p class="footer-bottom">
+                © 2026 GM College Canteen |
+                All Rights Reserved
+            </p>
+
+        </div>
 
     </footer>
 
@@ -360,7 +118,140 @@
 
     <script src="script.js"></script>
 
+
+    <!-- LOAD GM MENU FROM DJANGO -->
+
+    <script>
+
+        async function loadGMMenu() {
+
+            const container =
+                document.getElementById("food-container");
+
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/gm-menu/"
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load GM menu"
+                    );
+
+                }
+
+
+                const items =
+                    await response.json();
+
+
+                container.innerHTML = "";
+
+
+                if (items.length === 0) {
+
+                    container.innerHTML = `
+                        <p>
+                            No menu items available today.
+                        </p>
+                    `;
+
+                    return;
+
+                }
+
+
+                items.forEach(function(item) {
+
+                    const foodItem =
+                        document.createElement("div");
+
+
+                    foodItem.className =
+                        "food-item";
+
+
+                    foodItem.innerHTML = `
+
+                        <div class="food-image">
+                            🍽️
+                        </div>
+
+
+                        <div class="food-details">
+
+                            <h3>
+                                ${item.name}
+                            </h3>
+
+
+                            <div class="food-bottom">
+
+                                <strong>
+                                    ₹${item.price}
+                                </strong>
+
+
+                                <button
+                                    class="add-button"
+                                    onclick="addToCart(
+                                        ${item.id},
+                                        '${item.name}',
+                                        ${item.price},
+                                        '${item.canteen}'
+                                    )">
+
+                                    Add +
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(foodItem);
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "GM menu loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <p>
+
+                        Unable to load GM menu.
+
+                        Please make sure the Django
+                        server is running.
+
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        loadGMMenu();
+
+    </script>
+
+
 </body>
 
 </html>
-```
