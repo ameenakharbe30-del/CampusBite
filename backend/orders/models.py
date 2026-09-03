@@ -43,6 +43,11 @@ class Order(models.Model):
     customer_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
 
+    student_email = models.EmailField(
+        null=True,
+        blank=True
+    )
+
     canteen = models.ForeignKey(
         Canteen,
         on_delete=models.CASCADE

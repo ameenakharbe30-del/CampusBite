@@ -11,6 +11,8 @@
 </head>
 
 <body class="bg-gray-50 text-gray-800">
+<script src="student-auth.js"></script>
+
 
     <!-- Message Box -->
     <div
@@ -23,29 +25,54 @@
     <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
 
         <h2 class="text-xl font-bold text-orange-600">
-            KMES Canteen
+            KMES Campus Canteen
         </h2>
 
-        <div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
 
-            <a
-                href="orders.html"
-                class="font-medium text-gray-700 transition hover:text-orange-600">
-                My Orders
-            </a>
+    <!-- My Orders -->
+    <a href="orders.html"
+       class="px-4 py-2.5 text-gray-700 font-semibold
+              rounded-lg hover:bg-orange-50 hover:text-orange-600
+              transition">
+        My Orders
+    </a>
 
-            <a
-                href="cart.html"
-                class="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600">
-                🛒 Cart
-                <span
-                    id="cart-count"
-                    class="ml-1 rounded-full bg-white px-2 py-0.5 text-sm text-orange-600">
-                    0
-                </span>
-            </a>
+    <!-- Cart -->
+    <a href="cart.html"
+       class="flex items-center gap-2
+              bg-orange-500 hover:bg-orange-600
+              text-white font-semibold
+              px-4 py-2.5 rounded-lg transition">
 
-        </div>
+        🛒
+        <span>Cart</span>
+
+        <span id="cart-count"
+              class="bg-white text-orange-600
+                     min-w-[24px] h-6 px-1.5
+                     flex items-center justify-center
+                     rounded-full text-sm font-bold">
+            0
+        </span>
+
+    </a>
+
+    <!-- Profile - LAST -->
+    <a href="profile.html"
+       class="flex items-center gap-2
+              border border-orange-500
+              text-orange-600
+              hover:bg-orange-500 hover:text-white
+              font-semibold
+              px-4 py-2.5 rounded-lg transition">
+
+        👤
+        <span>Profile</span>
+
+    </a>
+
+</div>
 
     </nav>
 
@@ -178,7 +205,8 @@
     </footer>
 
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+   
 
 </body>
 

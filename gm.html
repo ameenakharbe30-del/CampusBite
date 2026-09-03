@@ -13,7 +13,7 @@
 
 <body class="min-h-screen bg-gray-50 text-gray-800">
 
-
+<script src="student-auth.js"></script>
     <!-- Navbar -->
     <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
 
@@ -178,10 +178,44 @@
 
                     foodItem.innerHTML = `
 
-                        <!-- Food Image -->
-                        <div class="flex h-44 items-center justify-center bg-orange-50 text-6xl">
-                            🍽️
-                        </div>
+
+                      <!-- Food Image -->
+<div class="h-44 overflow-hidden">
+    <img
+        src="${item.name.toLowerCase().includes('samosa')
+            ? 'images/samosa.jpg'
+            : item.name.toLowerCase().includes('vada pav')
+            ? 'images/vada pav.jpg'
+
+ : item.name.toLowerCase().includes('tea')
+            ? 'images/tea.jpg'
+
+ : item.name.toLowerCase().includes('coffee')
+            ? 'images/coffee.jpg'
+
+ : item.name.toLowerCase().includes('water')
+            ? 'images/water.jpg'
+
+ : item.name.toLowerCase().includes('idli')
+            ? 'images/idli.jpg'
+
+ : item.name.toLowerCase().includes('biscuit')
+            ? 'images/biscuit.jpg'
+
+ : item.name.toLowerCase().includes('veg sandwich')
+            ? 'images/vegsandwich.jpg'
+
+             : item.name.toLowerCase().includes('chicken sandwich')
+            ? 'images/chickensandwich.jpg'
+
+            : ''}"
+
+        alt="${item.name}"
+        class="h-full w-full object-cover"
+    >
+</div>
+
+
 
 
                         <!-- Food Details -->
@@ -260,4 +294,5 @@
 
 </body>
 
+<script src="script.js"></script>
 </html>

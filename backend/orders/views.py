@@ -1,7 +1,9 @@
+import json
+
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate
-import json
 
 from .models import Canteen, MenuItem, Order, OrderItem
 
@@ -101,6 +103,7 @@ def create_order(request):
 
         name = data.get("name")
         phone = data.get("phone")
+        student_email = data.get("student_email")
         location = data.get("location")
         payment = data.get("payment")
         canteen_name = data.get("canteen")
@@ -147,6 +150,7 @@ def create_order(request):
             customer_name=name,
 
             phone=phone,
+            student_email=student_email,
 
             canteen=canteen,
 
@@ -251,19 +255,19 @@ def my_orders(request):
             status=405
         )
 
-    phone = request.GET.get("phone")
+    student_email = request.GET.get("email", "").strip().lower()
 
-    if not phone:
+    if not student_email:
 
         return JsonResponse(
             {
-                "error": "Phone number is required"
+                "error": "Student email is required"
             },
             status=400
         )
 
     orders = Order.objects.filter(
-        phone=phone
+        student_email__iexact=student_email
     ).order_by("-created_at")
 
     data = []
@@ -288,34 +292,27 @@ def my_orders(request):
 
             "id": order.id,
 
-            "customer_name":
-                order.customer_name,
+            "customer_name": order.customer_name,
 
-            "phone":
-                order.phone,
+            "phone": order.phone,
 
-            "canteen":
-                order.canteen.name,
+            "student_email": order.student_email,
 
-            "location":
-                order.location,
+            "canteen": order.canteen.name,
 
-            "payment":
-                order.payment,
+            "location": order.location,
 
-            "status":
-                order.status,
+            "payment": order.payment,
 
-            "total":
-                float(order.total),
+            "status": order.status,
 
-            "created_at":
-                order.created_at.strftime(
-                    "%d %b %Y, %I:%M %p"
-                ),
+            "total": float(order.total),
 
-            "items":
-                items
+            "created_at": order.created_at.strftime(
+                "%d %b %Y, %I:%M %p"
+            ),
+
+            "items": items
 
         })
 
@@ -323,7 +320,6 @@ def my_orders(request):
         data,
         safe=False
     )
-
 
 
 
@@ -628,7 +624,6 @@ def staff_login(request):
 
 @csrf_exempt
 def student_login(request):
-
     if request.method != "POST":
         return JsonResponse(
             {"error": "Only POST requests are allowed"},
@@ -638,31 +633,61 @@ def student_login(request):
     try:
         data = json.loads(request.body)
 
-        username = data.get("username")
-        password = data.get("password")
+        email = data.get("email", "").strip().lower()
+        password = data.get("password", "")
 
-        if not username or not password:
+        # Check that both fields are entered
+        if not email or not password:
             return JsonResponse(
-                {"error": "Please enter username and password"},
+                {"error": "Please enter your email and password"},
                 status=400
             )
 
-        # Check Django user
-        user = authenticate(
-            username=username,
-            password=password
-        )
+        # Check if this email already exists
+        user = User.objects.filter(email__iexact=email).first()
 
-        if user is not None:
+        # ---------------------------------
+        # NEW STUDENT
+        # ---------------------------------
+        if user is None:
+
+            # Create account automatically
+            user = User.objects.create_user(
+                username=email,
+                email=email,
+                password=password
+            )
 
             return JsonResponse({
                 "success": True,
+                "message": "Account created successfully",
+                "email": email,
                 "username": user.username,
                 "redirect": "index.html"
             })
 
+        # ---------------------------------
+        # EXISTING STUDENT
+        # ---------------------------------
+
+        authenticated_user = authenticate(
+            username=user.username,
+            password=password
+        )
+
+        if authenticated_user is not None:
+
+            return JsonResponse({
+                "success": True,
+                "message": "Login successful",
+                "email": email,
+                "username": user.username,
+                "redirect": "index.html"
+            })
+
+        # Password doesn't match
         return JsonResponse(
-            {"error": "Invalid username or password"},
+            {"error": "Invalid password"},
             status=401
         )
 

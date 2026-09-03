@@ -3,52 +3,71 @@
 // ===============================
 
 function showMessage(message) {
-
     let box = document.getElementById("message-box");
 
     if (!box) {
-
         box = document.createElement("div");
-
         box.id = "message-box";
+
+        box.className =
+            "fixed top-5 right-5 z-50 bg-gray-900 text-white " +
+            "px-5 py-3 rounded-xl shadow-lg text-sm font-medium";
 
         document.body.appendChild(box);
     }
 
     box.textContent = message;
-
     box.style.display = "block";
 
-    setTimeout(function() {
-
+    setTimeout(function () {
         box.style.display = "none";
-
     }, 3000);
 }
+
+
+
 
 
 // ===============================
 // CART COUNT
 // ===============================
+// ===============================
+// GET STUDENT CART KEY
+// ===============================
+
+function getCartKey() {
+    const studentEmail = localStorage.getItem("studentEmail");
+
+    if (!studentEmail) {
+        return "cart";
+    }
+
+    return "cart_" + studentEmail.toLowerCase();
+}
+
+
+// ===============================
+// UPDATE CART COUNT
+// ===============================
 
 function updateCartCount() {
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartKey = getCartKey();
+
+    const cart =
+        JSON.parse(localStorage.getItem(cartKey)) || [];
 
     let count = 0;
 
-    cart.forEach(function(item) {
-
-        count = count + Number(item.quantity);
-
+    cart.forEach(function (item) {
+        count += Number(item.quantity);
     });
 
-    let cartCount = document.getElementById("cart-count");
+    const cartCount =
+        document.getElementById("cart-count");
 
     if (cartCount) {
-
         cartCount.textContent = count;
-
     }
 }
 
@@ -59,22 +78,29 @@ function updateCartCount() {
 
 function addToCart(id, name, price, canteen) {
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartKey = getCartKey();
+
+    let cart =
+        JSON.parse(localStorage.getItem(cartKey)) || [];
+
 
     // Only one canteen per order
-    if (cart.length > 0 && cart[0].canteen !== canteen) {
-
+    if (
+        cart.length > 0 &&
+        cart[0].canteen !== canteen
+    ) {
         showMessage(
             "You can only order from one canteen at a time."
         );
-
         return;
     }
 
-    // Check if item already exists
-    let existingItem = cart.find(function(item) {
-        return item.id === id;
-    });
+
+    const existingItem =
+        cart.find(function (item) {
+            return item.id === id;
+        });
+
 
     if (existingItem) {
 
@@ -92,16 +118,16 @@ function addToCart(id, name, price, canteen) {
 
     }
 
+
     localStorage.setItem(
-        "cart",
+        cartKey,
         JSON.stringify(cart)
     );
 
+
     updateCartCount();
 
-    showMessage(
-        name + " added to cart"
-    );
+    showMessage(name + " added to cart");
 }
 
 
@@ -111,81 +137,96 @@ function addToCart(id, name, price, canteen) {
 
 function showCart() {
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartKey = getCartKey();
 
-    let items = document.getElementById("cart-items");
-
-    let total = document.getElementById("total");
-
-    let subtotal = document.getElementById("subtotal");
-
-    let count = document.getElementById("item-count");
-
-    let cartCanteen = document.getElementById("cart-canteen");
+    let cart =
+        JSON.parse(localStorage.getItem(cartKey)) || [];
 
 
-    // Not cart page
+    const items =
+        document.getElementById("cart-items");
+
+    const total =
+        document.getElementById("total");
+
+    const subtotal =
+        document.getElementById("subtotal");
+
+    const count =
+        document.getElementById("item-count");
+
+    const cartCanteen =
+        document.getElementById("cart-canteen");
+
 
     if (!items) {
-
         return;
-
     }
 
 
     // Remove invalid items
+    cart = cart.filter(function (item) {
 
-    cart = cart.filter(function(item) {
-
-        return item.name &&
-               item.price !== undefined &&
-               item.quantity > 0;
+        return (
+            item.name &&
+            item.price !== undefined &&
+            item.quantity > 0
+        );
 
     });
 
 
     localStorage.setItem(
-        "cart",
+        cartKey,
         JSON.stringify(cart)
     );
 
 
+    // =========================
     // EMPTY CART
+    // =========================
 
     if (cart.length === 0) {
 
         items.innerHTML = `
-            <p class="empty">
-                Your cart is empty.
-            </p>
+            <div class="bg-white border border-gray-200
+                        rounded-2xl p-10 text-center">
+
+                <div class="text-4xl mb-4">🛒</div>
+
+                <h2 class="text-xl font-semibold text-gray-900">
+                    Your cart is empty
+                </h2>
+
+                <p class="text-gray-500 mt-2">
+                    Add some delicious food to get started.
+                </p>
+
+                <a href="index.html"
+                   class="inline-block mt-5 bg-orange-500
+                          hover:bg-orange-600 text-white
+                          font-semibold px-6 py-3 rounded-xl">
+                    Order Food
+                </a>
+
+            </div>
         `;
 
 
         if (total) {
-
             total.textContent = "0";
-
         }
-
 
         if (subtotal) {
-
             subtotal.textContent = "0";
-
         }
-
 
         if (count) {
-
             count.textContent = "0 items";
-
         }
 
-
         if (cartCanteen) {
-
             cartCanteen.textContent = "Canteen: -";
-
         }
 
 
@@ -195,7 +236,9 @@ function showCart() {
     }
 
 
-    // SHOW CANTEEN
+    // =========================
+    // CANTEEN
+    // =========================
 
     if (cartCanteen) {
 
@@ -208,113 +251,105 @@ function showCart() {
     items.innerHTML = "";
 
     let amount = 0;
-
     let itemCount = 0;
 
 
-    // SHOW ITEMS
+    // =========================
+    // ITEMS
+    // =========================
 
-    cart.forEach(function(item, index) {
+    cart.forEach(function (item, index) {
 
-        let itemTotal =
+        const itemTotal =
             Number(item.price) *
             Number(item.quantity);
 
 
-        amount = amount + itemTotal;
+        amount += itemTotal;
 
-        itemCount =
-            itemCount + Number(item.quantity);
+        itemCount += Number(item.quantity);
 
 
         items.innerHTML += `
+            <div class="bg-white border border-gray-200
+                        rounded-2xl p-5 shadow-sm
+                        flex flex-col sm:flex-row
+                        sm:items-center
+                        sm:justify-between gap-5">
 
-            <div class="item">
+                <div>
 
-                <div class="item-info">
-
-                    <h3>
+                    <h3 class="text-lg font-semibold text-gray-900">
                         ${item.name}
                     </h3>
 
-                    <p>
-                        ₹${item.price} each
+                    <p class="text-sm text-gray-500 mt-1">
+                        ₹${Number(item.price).toFixed(2)} each
                     </p>
 
                 </div>
 
 
-                <div class="item-right">
+                <div class="flex items-center gap-4">
 
-
-                    <div class="quantity">
+                    <div class="flex items-center
+                                border border-gray-300
+                                rounded-xl overflow-hidden">
 
                         <button
-                            onclick="minus(${index})">
-
+                            onclick="minus(${index})"
+                            class="px-4 py-2 text-lg
+                                   hover:bg-gray-100">
                             −
-
                         </button>
 
-
-                        <span>
+                        <span class="px-4 font-semibold">
                             ${item.quantity}
                         </span>
 
-
                         <button
-                            onclick="plus(${index})">
-
+                            onclick="plus(${index})"
+                            class="px-4 py-2 text-lg
+                                   hover:bg-gray-100">
                             +
-
                         </button>
 
                     </div>
 
 
-                    <span class="price">
-
-                        ₹${itemTotal}
-
+                    <span class="font-bold text-gray-900">
+                        ₹${itemTotal.toFixed(2)}
                     </span>
 
 
                     <button
-                        class="remove"
-                        onclick="removeItem(${index})">
-
+                        onclick="removeItem(${index})"
+                        class="text-red-500 hover:text-red-600
+                               text-sm font-medium">
                         Remove
-
                     </button>
-
 
                 </div>
 
             </div>
-
         `;
+
     });
 
 
     if (subtotal) {
-
-        subtotal.textContent = amount;
-
+        subtotal.textContent =
+            amount.toFixed(2);
     }
-
 
     if (total) {
-
-        total.textContent = amount;
-
+        total.textContent =
+            amount.toFixed(2);
     }
 
-
     if (count) {
-
         count.textContent =
             itemCount + " items";
-
     }
 
 
@@ -328,23 +363,22 @@ function showCart() {
 
 function plus(index) {
 
+    const cartKey = getCartKey();
+
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(localStorage.getItem(cartKey)) || [];
 
 
     if (!cart[index]) {
-
         return;
-
     }
 
 
-    cart[index].quantity =
-        cart[index].quantity + 1;
+    cart[index].quantity++;
 
 
     localStorage.setItem(
-        "cart",
+        cartKey,
         JSON.stringify(cart)
     );
 
@@ -361,30 +395,27 @@ function plus(index) {
 
 function minus(index) {
 
+    const cartKey = getCartKey();
+
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(localStorage.getItem(cartKey)) || [];
 
 
     if (!cart[index]) {
-
         return;
-
     }
 
 
-    cart[index].quantity =
-        cart[index].quantity - 1;
+    cart[index].quantity--;
 
 
     if (cart[index].quantity <= 0) {
-
         cart.splice(index, 1);
-
     }
 
 
     localStorage.setItem(
-        "cart",
+        cartKey,
         JSON.stringify(cart)
     );
 
@@ -401,14 +432,14 @@ function minus(index) {
 
 function removeItem(index) {
 
+    const cartKey = getCartKey();
+
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(localStorage.getItem(cartKey)) || [];
 
 
     if (!cart[index]) {
-
         return;
-
     }
 
 
@@ -416,7 +447,7 @@ function removeItem(index) {
 
 
     localStorage.setItem(
-        "cart",
+        cartKey,
         JSON.stringify(cart)
     );
 
@@ -433,13 +464,19 @@ function removeItem(index) {
 
 function clearCart() {
 
-    localStorage.removeItem("cart");
+    const cartKey = getCartKey();
+
+    localStorage.removeItem(cartKey);
+
 
     updateCartCount();
 
     showCart();
 
-    showMessage("Cart cleared successfully");
+
+    showMessage(
+        "Cart cleared successfully"
+    );
 }
 
 
@@ -448,19 +485,13 @@ function clearCart() {
 // ===============================
 
 function goToCheckout() {
-
-    let cart =
+    const cart =
         JSON.parse(localStorage.getItem("cart")) || [];
 
-
     if (cart.length === 0) {
-
         showMessage("Your cart is empty.");
-
         return;
-
     }
-
 
     window.location.href =
         "checkout.html";
@@ -472,105 +503,86 @@ function goToCheckout() {
 // ===============================
 
 function showCheckout() {
-
-    let cart =
+    const cart =
         JSON.parse(localStorage.getItem("cart")) || [];
 
-
-    let items =
+    const items =
         document.getElementById("checkout-items");
 
-
-    let total =
+    const total =
         document.getElementById("checkout-total");
 
-
-    let finalTotal =
+    const finalTotal =
         document.getElementById("final-total");
 
-
     if (!items) {
-
         return;
-
     }
-
 
     items.innerHTML = "";
 
     let amount = 0;
 
-
     if (cart.length === 0) {
-
         items.innerHTML = `
-            <p class="empty">
-                Your cart is empty.
-            </p>
+            <div class="text-center py-8">
+                <p class="text-gray-500">
+                    Your cart is empty.
+                </p>
+
+                <a href="index.html"
+                   class="inline-block mt-4
+                          bg-orange-500 hover:bg-orange-600
+                          text-white font-semibold
+                          px-5 py-2 rounded-xl">
+                    Order Food
+                </a>
+            </div>
         `;
 
         if (total) {
-
             total.textContent = "0";
-
         }
 
         if (finalTotal) {
-
             finalTotal.textContent = "0";
-
         }
 
         return;
-
     }
 
-
-    cart.forEach(function(item) {
-
-        let itemTotal =
+    cart.forEach(function (item) {
+        const itemTotal =
             Number(item.price) *
             Number(item.quantity);
 
-
-        amount = amount + itemTotal;
-
+        amount += itemTotal;
 
         items.innerHTML += `
+            <div class="flex items-center
+                        justify-between py-3
+                        border-b border-gray-100">
 
-            <div class="checkout-item">
-
-                <span class="checkout-item-name">
-
+                <span class="text-gray-700">
                     ${item.name} × ${item.quantity}
-
                 </span>
 
-
-                <span class="checkout-item-price">
-
-                    ₹${itemTotal}
-
+                <span class="font-semibold text-gray-900">
+                    ₹${itemTotal.toFixed(2)}
                 </span>
 
             </div>
-
         `;
-
     });
 
-
     if (total) {
-
-        total.textContent = amount;
-
+        total.textContent =
+            amount.toFixed(2);
     }
 
-
     if (finalTotal) {
-
-        finalTotal.textContent = amount;
-
+        finalTotal.textContent =
+            amount.toFixed(2);
     }
 }
 
@@ -578,174 +590,140 @@ function showCheckout() {
 // ===============================
 // PLACE ORDER
 // ===============================
+
 async function placeOrder() {
 
-    let name = document.getElementById("name");
-    let phone = document.getElementById("phone");
-    let location = document.getElementById("location");
+    const name =
+        document.getElementById("name");
 
-    let payment = document.querySelector(
-        'input[name="payment"]:checked'
-    );
+    const phone =
+        document.getElementById("phone");
 
+    const location =
+        document.getElementById("location");
 
-    // =========================
-    // CHECK INPUT FIELDS
-    // =========================
+    const payment =
+        document.querySelector(
+            'input[name="payment"]:checked'
+        );
 
+    // Check fields
     if (!name || !phone || !location) {
         return;
     }
-
 
     if (
         name.value.trim() === "" ||
         phone.value.trim() === "" ||
         location.value.trim() === ""
     ) {
-
         showMessage(
             "Please fill all the details."
         );
-
         return;
     }
 
-
-    // =========================
-    // CHECK PAYMENT
-    // =========================
-
+    // Check payment
     if (!payment) {
-
         showMessage(
             "Please select a payment method."
         );
-
         return;
     }
 
-
-    // =========================
-    // GET CART
-    // =========================
-
-    let cart =
+    // Get cart
+    const cart =
         JSON.parse(
             localStorage.getItem("cart")
         ) || [];
 
-
-    console.log("Cart:", cart);
-
-
     if (cart.length === 0) {
-
         showMessage(
             "Your cart is empty."
         );
-
         return;
     }
 
-
-    // =========================
-    // GET CANTEEN
-    // =========================
-
-    let canteen =
+    // Get canteen
+    const canteen =
         cart[0].canteen;
 
+    // Get logged-in student's email
+    const studentEmail =
+        localStorage.getItem("studentEmail");
 
-    console.log(
-        "Canteen:",
-        canteen
-    );
+    // Check student login
+    if (!studentEmail) {
+        showMessage(
+            "Please login before placing an order."
+        );
+        return;
+    }
 
+    // Order data
+    const orderData = {
 
-    // =========================
-    // CONVERT PAYMENT
-    // =========================
+        name:
+            name.value.trim(),
 
-let paymentValue = payment.value;
+        phone:
+            phone.value.trim(),
 
-    // =========================
-    // CREATE DATA FOR DJANGO
-    // =========================
+        location:
+            location.value.trim(),
 
-    let orderData = {
+        payment:
+            payment.value,
 
-        name: name.value.trim(),
+        canteen:
+            canteen,
 
-        phone: phone.value.trim(),
+        student_email:
+            studentEmail,
 
-        location: location.value,
+        items:
+            cart.map(function (item) {
 
-        payment: paymentValue,
+                return {
+                    id: item.id,
+                    quantity: item.quantity
+                };
 
-        canteen: canteen,
-
-        items: cart.map(function(item) {
-
-            return {
-
-                id: item.id,
-
-                quantity: item.quantity
-
-            };
-
-        })
-
+            })
     };
-
 
     console.log(
         "Sending to Django:",
         orderData
     );
 
-
-    // =========================
-    // SEND ORDER TO DJANGO
-    // =========================
-
     try {
 
-        let response = await fetch(
-            "http://127.0.0.1:8000/api/create-order/",
-            {
-                method: "POST",
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/api/create-order/",
+                {
+                    method: "POST",
 
-                headers: {
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                    "Content-Type":
-                        "application/json"
+                    body:
+                        JSON.stringify(
+                            orderData
+                        )
+                }
+            );
 
-                },
-
-                body:
-                    JSON.stringify(
-                        orderData
-                    )
-
-            }
-        );
-
-
-        let result =
+        const result =
             await response.json();
-
 
         console.log(
             "Django response:",
             result
         );
-
-
-        // =========================
-        // CHECK DJANGO RESPONSE
-        // =========================
 
         if (!response.ok) {
 
@@ -757,70 +735,65 @@ let paymentValue = payment.value;
             return;
         }
 
-
         // =========================
-        // CREATE FRONTEND ORDER
+        // SAVE FRONTEND ORDER
         // =========================
 
-let order = {
+        const order = {
 
-    orderId:
-        "#" + result.order_id,
+            orderId:
+                "#" + result.order_id,
 
-    name:
-        name.value.trim(),
+            name:
+                name.value.trim(),
 
-    phone:
-        phone.value.trim(),
+            phone:
+                phone.value.trim(),
 
-    location:
-        location.value,
+            studentEmail:
+                studentEmail,
 
-    payment:
-        paymentValue,
+            location:
+                location.value.trim(),
 
-    canteen:
-        canteen,
+            payment:
+                payment.value,
 
-    items:
-        cart,
+            canteen:
+                canteen,
 
-    total:
-        result.total,
+            items:
+                cart,
 
-    status:
-        result.status,
+            total:
+                result.total,
 
-    date:
-        new Date().toLocaleString()
+            status:
+                result.status,
 
-};
+            date:
+                new Date().toLocaleString()
+        };
 
+        localStorage.setItem(
+            "lastOrder",
+            JSON.stringify(order)
+        );
 
-// SAVE ORDER
-localStorage.setItem(
-    "lastOrder",
-    JSON.stringify(order)
-);
+        // Save phone
+        localStorage.setItem(
+            "customerPhone",
+            phone.value.trim()
+        );
 
+        // Clear cart
+        localStorage.removeItem("cart");
 
-// SAVE CUSTOMER PHONE
-localStorage.setItem(
-    "customerPhone",
-    phone.value.trim()
-);
+        updateCartCount();
 
-
-// CLEAR CART
-localStorage.removeItem("cart");
-
-updateCartCount();
-
-
-// GO TO ORDER DETAILS
-window.location.href =
-    "order-details.html";
-
+        // Go to order details
+        window.location.href =
+            "order-details.html";
 
     } catch (error) {
 
@@ -829,426 +802,299 @@ window.location.href =
             error
         );
 
-
         showMessage(
             "Cannot connect to Django server."
         );
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // ===============================
 // SHOW ORDER ID
 // ===============================
-
-function showOrderId() {
-
-    let orderId =
-        localStorage.getItem("orderId");
-
-
-    let element =
-        document.getElementById("order-id");
-
-
-    if (element && orderId) {
-
-        element.textContent =
-            orderId;
-
-    }
-}
-
-
 // ===============================
-// VIEW ORDER
+// SHOW ORDER DETAILS
 // ===============================
-
-function viewOrder() {
-
-    window.location.href =
-        "order-details.html";
-}
-
-
-// ===============================
-// RUN FUNCTIONS
-// ===============================
-
-updateCartCount();
-
-showCart();
-
-showCheckout();
-
-showOrderId();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ---------- Show Order Details ---------- */
 
 function showOrderDetails() {
+    const container = document.getElementById("order-items");
 
-    let order = JSON.parse(
-        localStorage.getItem("lastOrder")
-    );
-
-    if (!order) {
+    if (!container) {
         return;
     }
 
-    // Order information
+    const lastOrder = JSON.parse(
+        localStorage.getItem("lastOrder")
+    );
 
-    document.getElementById("order-id").textContent =
-        order.orderId;
-
-    document.getElementById("canteen").textContent =
-        order.canteen;
-
-document.getElementById("customer").textContent =
-    order.name;
-
-    document.getElementById("phone").textContent =
-        order.phone;
-
-    document.getElementById("order-type").textContent =
-        order.location;
-
-    document.getElementById("payment").textContent =
-        order.payment;
-
-
-    // Items
-
-    let items =
-        document.getElementById("order-items");
-
-    items.innerHTML = "";
-
-    let total = 0;
-
-
-    order.items.forEach(function(item) {
-
-        let itemTotal =
-            Number(item.price) *
-            Number(item.quantity);
-
-        total = total + itemTotal;
-
-
-        items.innerHTML += `
-
-            <div class="order-item">
-
-                <span>
-                    ${item.name} × ${item.quantity}
-                </span>
-
-                <strong>
-                    ₹${itemTotal}
-                </strong>
-
+    if (!lastOrder) {
+        container.innerHTML = `
+            <div class="text-center py-10">
+                <p class="text-gray-500">
+                    No order details available.
+                </p>
             </div>
+        `;
+        return;
+    }
 
+    const items = lastOrder.items || [];
+
+    let itemsHTML = "";
+
+    items.forEach(function (item) {
+        const itemTotal =
+            Number(item.price) * Number(item.quantity);
+
+        itemsHTML += `
+            <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                <div>
+                    <p class="font-medium text-gray-900">
+                        ${item.name}
+                    </p>
+
+                    <p class="text-sm text-gray-500">
+                        Quantity: ${item.quantity}
+                    </p>
+                </div>
+
+                <p class="font-semibold text-gray-900">
+                    ₹${itemTotal.toFixed(2)}
+                </p>
+            </div>
         `;
     });
 
+    container.innerHTML = itemsHTML;
 
-    // Total
+    const orderId = document.getElementById("order-id");
+    const orderStatus = document.getElementById("order-status");
+    const orderTotal = document.getElementById("order-total");
 
-    document.getElementById("order-total").textContent =
-        total;
+    if (orderId) {
+        orderId.textContent =
+            lastOrder.orderId || "";
+    }
+
+    if (orderStatus) {
+        orderStatus.textContent =
+            lastOrder.status || "Order Placed";
+    }
+
+    if (orderTotal) {
+        orderTotal.textContent =
+            `₹${Number(lastOrder.total).toFixed(2)}`;
+    }
 }
-
-
-// Run on order details page
-
-if (document.getElementById("order-items")) {
-    showOrderDetails();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ===============================
+// SHOW MY ORDERS
+// ===============================
 
 async function showOrders() {
-
-    const list =
-        document.getElementById("orders-list");
+    const list = document.getElementById("orders-list");
 
     if (!list) {
         return;
     }
 
+    const studentEmail = localStorage.getItem("studentEmail");
 
-    // Get phone number saved when order was placed
-    const phone =
-        localStorage.getItem("customerPhone");
-
-
-    console.log("Customer phone:", phone);
-
-
-    if (!phone) {
-
+    // Student is not logged in
+    if (!studentEmail) {
         list.innerHTML = `
-            <div class="empty-order">
+            <div class="bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm">
+                <div class="text-4xl mb-4">🔐</div>
 
-                <h2>
-                    No customer information found
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                    Please Login
                 </h2>
 
-                <p>
-                    Please place an order first.
+                <p class="text-gray-500 mb-6">
+                    Login to view your orders.
                 </p>
 
-                <a href="index.html">
-                    Order Food
+                <a href="student-login.html"
+                   class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl">
+                    Student Login
                 </a>
-
             </div>
         `;
 
         return;
     }
 
-
     try {
-
         const response = await fetch(
-            "http://127.0.0.1:8000/api/my-orders/?phone="
-            + encodeURIComponent(phone)
+            "http://127.0.0.1:8000/api/my-orders/?email=" +
+            encodeURIComponent(studentEmail)
         );
 
-
-        const orders =
-            await response.json();
-
-
-        console.log(
-            "DJANGO ORDERS:",
-            orders
-        );
-
+        const orders = await response.json();
 
         if (!response.ok) {
-
             throw new Error(
-                orders.error ||
-                "Could not load orders"
+                orders.error || "Could not load orders"
             );
-
         }
 
-
-        if (
-            !Array.isArray(orders) ||
-            orders.length === 0
-        ) {
-
+        // No orders
+        if (!Array.isArray(orders) || orders.length === 0) {
             list.innerHTML = `
-                <div class="empty-order">
+                <div class="bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm">
+                    <div class="text-4xl mb-4">📋</div>
 
-                    <h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
                         No orders yet
                     </h2>
 
-                    <p>
+                    <p class="text-gray-500 mb-6">
                         Your placed orders will appear here.
                     </p>
 
-                    <a href="index.html">
+                    <a href="index.html"
+                       class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl">
                         Order Food
                     </a>
-
                 </div>
             `;
 
             return;
         }
 
-
         list.innerHTML = "";
 
+        orders.forEach(function (order) {
+            let itemsHTML = "";
 
-        orders.forEach(function(order) {
+            if (order.items && order.items.length > 0) {
+                order.items.forEach(function (item) {
+                    const itemTotal =
+                        Number(item.price) * Number(item.quantity);
 
-            let items = "";
+                    itemsHTML += `
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="text-gray-700">
+                                ${item.name} × ${item.quantity}
+                            </span>
 
-
-            if (
-                order.items &&
-                order.items.length > 0
-            ) {
-
-                order.items.forEach(function(item) {
-
-                    items += `
-                        <p>
-                            ${item.name}
-                            × ${item.quantity}
-                        </p>
+                            <span class="font-medium text-gray-900">
+                                ₹${itemTotal.toFixed(2)}
+                            </span>
+                        </div>
                     `;
-
                 });
-
-            } else {
-
-                items = `
-                    <p>
-                        No items found.
-                    </p>
-                `;
-
             }
 
-
             list.innerHTML += `
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-                <div class="order-box">
-
-                    <div class="order-top">
+                    <div class="px-6 py-5 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 
                         <div>
-
-                            <span>
+                            <span class="text-xs uppercase tracking-wide text-gray-400">
                                 Order ID
                             </span>
 
-                            <strong>
+                            <h2 class="text-xl font-bold text-gray-900">
                                 #${order.id}
-                            </strong>
-
+                            </h2>
                         </div>
 
-
-                        <span class="status">
+                        <span class="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold">
                             ${order.status}
                         </span>
 
                     </div>
 
+                    <div class="p-6">
 
-                    <div class="order-canteen">
+                        <div class="mb-5">
+                            <span class="text-xs uppercase tracking-wide text-gray-400">
+                                Canteen
+                            </span>
 
-                        <strong>
-                            ${order.canteen}
-                        </strong>
+                            <p class="font-semibold text-gray-900 mt-1">
+                                ${order.canteen}
+                            </p>
+                        </div>
+
+                        <div class="mb-5">
+                            <span class="text-xs uppercase tracking-wide text-gray-400">
+                                Order Date
+                            </span>
+
+                            <p class="text-gray-700 mt-1">
+                                ${order.created_at}
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                            Items
+                        </h3>
+
+                        <div>
+                            ${itemsHTML}
+                        </div>
 
                     </div>
 
+                    <div class="px-6 py-5 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-                    <div class="order-items">
+                        <div>
+                            <span class="text-xs uppercase tracking-wide text-gray-400">
+                                Total
+                            </span>
 
-                        ${items}
+                            <p class="text-2xl font-bold text-orange-600">
+                                ₹${Number(order.total).toFixed(2)}
+                            </p>
+                        </div>
 
-                    </div>
-
-
-                    <div class="order-bottom">
-
-                        <strong>
-                            ₹${order.total}
-                        </strong>
-
-
-                        <a href="order-details.html">
-                            View Details
+                        <a href="order-details.html"
+                           class="text-orange-600 font-semibold hover:text-orange-700">
+                            View Details →
                         </a>
 
                     </div>
 
                 </div>
-
             `;
-
         });
 
-
     } catch (error) {
-
-        console.error(
-            "Orders loading error:",
-            error
-        );
-
+        console.error("Orders loading error:", error);
 
         list.innerHTML = `
-            <div class="empty-order">
+            <div class="bg-white border border-red-200 rounded-2xl p-10 text-center shadow-sm">
 
-                <h2>
+                <div class="text-4xl mb-4">⚠️</div>
+
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
                     Unable to load orders
                 </h2>
 
-                <p>
+                <p class="text-gray-500">
                     ${error.message}
                 </p>
 
             </div>
         `;
-
     }
-
 }
 
+
+// ===============================
+// RUN PAGE FUNCTIONS
+// ===============================
+
+updateCartCount();
+showCart();
+showCheckout();
+
+if (document.getElementById("order-items")) {
+    showOrderDetails();
+}
 
 if (document.getElementById("orders-list")) {
-
     showOrders();
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

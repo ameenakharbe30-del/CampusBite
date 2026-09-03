@@ -4,7 +4,7 @@ const loginError = document.getElementById("login-error");
 loginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const username = document.getElementById("student-id").value.trim();
+    const email = document.getElementById("student-email").value.trim();
     const password = document.getElementById("password").value;
 
     loginError.classList.add("hidden");
@@ -19,7 +19,7 @@ loginForm.addEventListener("submit", async function (event) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    username: username,
+                    email: email,
                     password: password
                 })
             }
@@ -30,6 +30,7 @@ loginForm.addEventListener("submit", async function (event) {
         if (data.success) {
 
             // Save logged-in student
+            localStorage.setItem("studentEmail", data.email);
             localStorage.setItem("studentUsername", data.username);
             localStorage.setItem("studentLoggedIn", "true");
 
@@ -39,7 +40,7 @@ loginForm.addEventListener("submit", async function (event) {
         } else {
 
             loginError.textContent =
-                data.error || "Invalid username or password";
+                data.error || "Unable to login";
 
             loginError.classList.remove("hidden");
         }

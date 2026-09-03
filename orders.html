@@ -16,7 +16,7 @@
 
 <body class="bg-gray-50 text-gray-800 min-h-screen">
 
-
+<script src="student-auth.js"></script>
     <!-- Navigation -->
 
     <nav class="bg-white border-b border-gray-200 shadow-sm">
@@ -91,492 +91,327 @@
 
 
 
-    <!-- Load Orders From Django -->
-
     <script>
+    async function loadOrders() {
 
-        async function loadOrders() {
+        const container = document.getElementById("orders-list");
 
-            const container =
-                document.getElementById("orders-list");
+        // Get logged-in student's email
+        const studentEmail = localStorage.getItem("studentEmail");
+
+        // Student not logged in
+        if (!studentEmail) {
+
+            container.innerHTML = `
+                <div class="bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm">
+
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        Please Login
+                    </h2>
+
+                    <p class="text-gray-500 mb-6">
+                        Please login to view your orders.
+                    </p>
+
+                    <a href="student-login.html"
+                       class="inline-block bg-orange-500 hover:bg-orange-600
+                              text-white font-semibold px-6 py-3 rounded-xl transition">
+                        Student Login
+                    </a>
+
+                </div>
+            `;
+
+            return;
+        }
 
 
-            // Get customer phone number
+        try {
 
-            const phone =
-                localStorage.getItem("customerPhone");
+            // Get orders using student email
+            const response = await fetch(
+                "http://127.0.0.1:8000/api/my-orders/?email=" +
+                encodeURIComponent(studentEmail)
+            );
 
 
-            if (!phone) {
-
-                container.innerHTML = `
-
-                    <div class="bg-white border border-gray-200
-                                rounded-2xl p-10 text-center
-                                shadow-sm">
-
-                        <h2 class="text-2xl font-bold
-                                   text-gray-900 mb-2">
-
-                            No orders found
-
-                        </h2>
-
-                        <p class="text-gray-500 mb-6">
-
-                            Please place an order first.
-
-                        </p>
-
-                        <a href="index.html"
-                           class="inline-block bg-orange-500
-                                  hover:bg-orange-600
-                                  text-white font-semibold
-                                  px-6 py-3 rounded-xl
-                                  transition">
-
-                            Order Food
-
-                        </a>
-
-                    </div>
-
-                `;
-
-                return;
-
+            if (!response.ok) {
+                throw new Error("Could not load orders");
             }
 
 
+            const orders = await response.json();
 
-            try {
-
-                const response =
-                    await fetch(
-                        "http://127.0.0.1:8000/api/my-orders/?phone="
-                        + encodeURIComponent(phone)
-                    );
+            container.innerHTML = "";
 
 
-                if (!response.ok) {
+            // No orders
+            if (orders.length === 0) {
 
-                    throw new Error(
-                        "Could not load orders"
-                    );
+                container.innerHTML = `
+                    <div class="bg-white border border-gray-200
+                                rounded-2xl p-10 text-center shadow-sm">
 
-                }
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                            No orders yet
+                        </h2>
+
+                        <p class="text-gray-500 mb-6">
+                            Your placed orders will appear here.
+                        </p>
+
+                        <a href="index.html"
+                           class="inline-block bg-orange-500 hover:bg-orange-600
+                                  text-white font-semibold px-6 py-3 rounded-xl transition">
+                            Order Food
+                        </a>
+
+                    </div>
+                `;
+
+                return;
+            }
 
 
-                const orders =
-                    await response.json();
+            // Display orders
+            orders.forEach(function(order) {
+
+                const orderCard = document.createElement("div");
+
+                orderCard.className =
+                    "bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden";
 
 
-                container.innerHTML = "";
+                let itemsHTML = "";
 
 
-                // No orders
+                order.items.forEach(function(item) {
 
-                if (orders.length === 0) {
+                    itemsHTML += `
+                        <div class="flex items-center justify-between
+                                    py-3 border-b border-gray-100">
 
-                    container.innerHTML = `
+                            <span class="text-gray-700">
+                                ${item.name} × ${item.quantity}
+                            </span>
 
-                        <div class="bg-white border border-gray-200
-                                    rounded-2xl p-10 text-center
-                                    shadow-sm">
-
-                            <h2 class="text-2xl font-bold
-                                       text-gray-900 mb-2">
-
-                                No orders yet
-
-                            </h2>
-
-                            <p class="text-gray-500 mb-6">
-
-                                Your placed orders will appear here.
-
-                            </p>
-
-                            <a href="index.html"
-                               class="inline-block
-                                      bg-orange-500
-                                      hover:bg-orange-600
-                                      text-white font-semibold
-                                      px-6 py-3 rounded-xl
-                                      transition">
-
-                                Order Food
-
-                            </a>
+                            <strong class="text-gray-900">
+                                ₹${(
+                                    item.price * item.quantity
+                                ).toFixed(2)}
+                            </strong>
 
                         </div>
-
                     `;
-
-                    return;
-
-                }
-
-
-
-                // Display orders
-
-                orders.forEach(function(order) {
-
-
-                    const orderCard =
-                        document.createElement("div");
-
-
-                    orderCard.className =
-                        "bg-white border border-gray-200 " +
-                        "rounded-2xl shadow-sm overflow-hidden";
-
-
-                    let itemsHTML = "";
-
-
-                    order.items.forEach(
-                        function(item) {
-
-                            itemsHTML += `
-
-                                <div class="flex items-center
-                                            justify-between
-                                            py-3 border-b
-                                            border-gray-100">
-
-                                    <span class="text-gray-700">
-
-                                        ${item.name}
-                                        × ${item.quantity}
-
-                                    </span>
-
-                                    <strong class="text-gray-900">
-
-                                        ₹${(
-                                            item.price *
-                                            item.quantity
-                                        ).toFixed(2)}
-
-                                    </strong>
-
-                                </div>
-
-                            `;
-
-                        }
-                    );
-
-
-
-                    orderCard.innerHTML = `
-
-                        <!-- Order Header -->
-
-                        <div class="px-6 py-5
-                                    bg-gray-50
-                                    border-b border-gray-200
-                                    flex flex-col sm:flex-row
-                                    sm:items-center
-                                    sm:justify-between
-                                    gap-3">
-
-                            <div>
-
-                                <span class="text-sm
-                                             text-gray-500">
-
-                                    Order ID
-
-                                </span>
-
-                                <h2 class="text-xl font-bold
-                                           text-gray-900">
-
-                                    #${order.id}
-
-                                </h2>
-
-                            </div>
-
-
-                            <div class="text-sm
-                                        text-gray-500">
-
-                                ${order.created_at}
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Order Information -->
-
-                        <div class="p-6">
-
-                            <div class="grid grid-cols-1
-                                        sm:grid-cols-2
-                                        lg:grid-cols-4
-                                        gap-5 mb-6">
-
-
-                                <!-- Canteen -->
-
-                                <div>
-
-                                    <span class="block
-                                                 text-xs
-                                                 font-semibold
-                                                 uppercase
-                                                 tracking-wide
-                                                 text-gray-400
-                                                 mb-1">
-
-                                        Canteen
-
-                                    </span>
-
-                                    <strong class="text-gray-900">
-
-                                        ${order.canteen}
-
-                                    </strong>
-
-                                </div>
-
-
-
-                                <!-- Customer -->
-
-                                <div>
-
-                                    <span class="block
-                                                 text-xs
-                                                 font-semibold
-                                                 uppercase
-                                                 tracking-wide
-                                                 text-gray-400
-                                                 mb-1">
-
-                                        Customer
-
-                                    </span>
-
-                                    <strong class="text-gray-900">
-
-                                        ${order.customer_name}
-
-                                    </strong>
-
-                                </div>
-
-
-
-                                <!-- Pickup Location -->
-
-                                <div>
-
-                                    <span class="block
-                                                 text-xs
-                                                 font-semibold
-                                                 uppercase
-                                                 tracking-wide
-                                                 text-gray-400
-                                                 mb-1">
-
-                                        Pickup Location
-
-                                    </span>
-
-                                    <strong class="text-gray-900">
-
-                                        ${order.location}
-
-                                    </strong>
-
-                                </div>
-
-
-
-                                <!-- Payment -->
-
-                                <div>
-
-                                    <span class="block
-                                                 text-xs
-                                                 font-semibold
-                                                 uppercase
-                                                 tracking-wide
-                                                 text-gray-400
-                                                 mb-1">
-
-                                        Payment
-
-                                    </span>
-
-                                    <strong class="text-gray-900">
-
-                                        ${order.payment}
-
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-
-
-                            <!-- Items -->
-
-                            <div class="border-t
-                                        border-gray-200
-                                        pt-5">
-
-                                <h3 class="text-lg font-semibold
-                                           text-gray-900 mb-3">
-
-                                    Items
-
-                                </h3>
-
-
-                                <div>
-
-                                    ${itemsHTML}
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Order Footer -->
-
-                        <div class="px-6 py-5
-                                    bg-gray-50
-                                    border-t border-gray-200
-                                    flex flex-col sm:flex-row
-                                    sm:items-center
-                                    sm:justify-between
-                                    gap-4">
-
-
-                            <!-- Status -->
-
-                            <div>
-
-                                <span class="block text-xs
-                                             font-semibold
-                                             uppercase
-                                             tracking-wide
-                                             text-gray-400
-                                             mb-1">
-
-                                    Status
-
-                                </span>
-
-                                <strong class="inline-block
-                                               px-3 py-1
-                                               rounded-full
-                                               bg-orange-100
-                                               text-orange-700
-                                               text-sm">
-
-                                    ${order.status}
-
-                                </strong>
-
-                            </div>
-
-
-
-                            <!-- Total -->
-
-                            <div class="sm:text-right">
-
-                                <span class="block text-xs
-                                             font-semibold
-                                             uppercase
-                                             tracking-wide
-                                             text-gray-400
-                                             mb-1">
-
-                                    Total
-
-                                </span>
-
-                                <strong class="text-2xl
-                                               font-bold
-                                               text-orange-600">
-
-                                    ₹${order.total.toFixed(2)}
-
-                                </strong>
-
-                            </div>
-
-
-                        </div>
-
-                    `;
-
-
-                    container.appendChild(
-                        orderCard
-                    );
 
                 });
 
 
-            } catch (error) {
+                orderCard.innerHTML = `
 
-                console.error(
-                    "Orders loading error:",
-                    error
-                );
+                    <!-- Order Header -->
+
+                    <div class="px-6 py-5 bg-gray-50 border-b border-gray-200
+                                flex flex-col sm:flex-row sm:items-center
+                                sm:justify-between gap-3">
+
+                        <div>
+
+                            <span class="text-sm text-gray-500">
+                                Order ID
+                            </span>
+
+                            <h2 class="text-xl font-bold text-gray-900">
+                                #${order.id}
+                            </h2>
+
+                        </div>
 
 
-                container.innerHTML = `
+                        <div class="text-sm text-gray-500">
+                            ${order.created_at}
+                        </div>
 
-                    <div class="bg-white border border-red-200
-                                rounded-2xl p-10 text-center
-                                shadow-sm">
+                    </div>
 
-                        <h2 class="text-2xl font-bold
-                                   text-gray-900 mb-2">
 
-                            Unable to load orders
+                    <!-- Order Information -->
 
-                        </h2>
+                    <div class="p-6">
 
-                        <p class="text-gray-500">
+                        <div class="grid grid-cols-1 sm:grid-cols-2
+                                    lg:grid-cols-4 gap-5 mb-6">
 
-                            Please make sure the Django
-                            server is running.
 
-                        </p>
+                            <!-- Canteen -->
+
+                            <div>
+
+                                <span class="block text-xs font-semibold
+                                             uppercase tracking-wide
+                                             text-gray-400 mb-1">
+                                    Canteen
+                                </span>
+
+                                <strong class="text-gray-900">
+                                    ${order.canteen}
+                                </strong>
+
+                            </div>
+
+
+                            <!-- Customer -->
+
+                            <div>
+
+                                <span class="block text-xs font-semibold
+                                             uppercase tracking-wide
+                                             text-gray-400 mb-1">
+                                    Customer
+                                </span>
+
+                                <strong class="text-gray-900">
+                                    ${order.customer_name}
+                                </strong>
+
+                            </div>
+
+
+                            <!-- Pickup Location -->
+
+                            <div>
+
+                                <span class="block text-xs font-semibold
+                                             uppercase tracking-wide
+                                             text-gray-400 mb-1">
+                                    Pickup Location
+                                </span>
+
+                                <strong class="text-gray-900">
+                                    ${order.location}
+                                </strong>
+
+                            </div>
+
+
+                            <!-- Payment -->
+
+                            <div>
+
+                                <span class="block text-xs font-semibold
+                                             uppercase tracking-wide
+                                             text-gray-400 mb-1">
+                                    Payment
+                                </span>
+
+                                <strong class="text-gray-900">
+                                    ${order.payment}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Items -->
+
+                        <div class="border-t border-gray-200 pt-5">
+
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                                Items
+                            </h3>
+
+                            <div>
+                                ${itemsHTML}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Order Footer -->
+
+                    <div class="px-6 py-5 bg-gray-50 border-t border-gray-200
+                                flex flex-col sm:flex-row sm:items-center
+                                sm:justify-between gap-4">
+
+
+                        <!-- Status -->
+
+                        <div>
+
+                            <span class="block text-xs font-semibold
+                                         uppercase tracking-wide
+                                         text-gray-400 mb-1">
+                                Status
+                            </span>
+
+                            <strong class="inline-block px-3 py-1 rounded-full
+                                           bg-orange-100 text-orange-700 text-sm">
+                                ${order.status}
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Total -->
+
+                        <div class="sm:text-right">
+
+                            <span class="block text-xs font-semibold
+                                         uppercase tracking-wide
+                                         text-gray-400 mb-1">
+                                Total
+                            </span>
+
+                            <strong class="text-2xl font-bold text-orange-600">
+                                ₹${Number(order.total).toFixed(2)}
+                            </strong>
+
+                        </div>
 
                     </div>
 
                 `;
 
-            }
+
+                container.appendChild(orderCard);
+
+            });
+
+
+        } catch (error) {
+
+            console.error("Orders loading error:", error);
+
+            container.innerHTML = `
+                <div class="bg-white border border-red-200
+                            rounded-2xl p-10 text-center shadow-sm">
+
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        Unable to load orders
+                    </h2>
+
+                    <p class="text-gray-500">
+                        Please make sure the Django server is running.
+                    </p>
+
+                </div>
+            `;
 
         }
 
+    }
 
 
-        loadOrders();
+    // Load orders when page opens
+    loadOrders();
 
-    </script>
+</script>
 
 
+<script src="script.js"></script>
 </body>
 
 </html>

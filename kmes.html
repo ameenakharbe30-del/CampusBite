@@ -12,6 +12,7 @@
 </head>
 
 <body class="min-h-screen bg-gray-50 text-gray-800">
+<script src="student-auth.js"></script>
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
@@ -163,10 +164,42 @@
 
                     foodItem.innerHTML = `
 
-                        <!-- Food Image -->
-                        <div class="flex h-44 items-center justify-center bg-orange-50 text-6xl">
-                            🍽️
-                        </div>
+                       <!-- Food Image -->
+<div class="h-44 overflow-hidden">
+    <img
+        src="${item.name.toLowerCase().includes('pav bhaji')
+            ? 'images/pavbhaji.jpg'
+            : item.name.toLowerCase().includes('dhokla')
+            ? 'images/dhokla.jpg'
+           : item.name.toLowerCase().includes('cutlet')
+            ? 'images/cutlet.jpg'
+
+            : item.name.toLowerCase().includes('samosa')
+            ? 'images/samosa.jpg'
+
+            : item.name.toLowerCase().includes('vada pav')
+            ? 'images/vada pav.jpg'
+
+            : item.name.toLowerCase().includes('noodles')
+            ? 'images/noodles.jpg'
+
+            : ''}"
+            
+        alt="${item.name}"
+        class="h-full w-full object-cover"
+    >
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
                         <!-- Food Details -->
@@ -243,6 +276,7 @@
 
     </script>
 
+<script src="script.js"></script>
 </body>
 
 </html>
