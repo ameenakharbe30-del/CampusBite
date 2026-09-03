@@ -2,30 +2,30 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/output.css">
 
     <title>Cart - KMES Canteen</title>
-
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-50 text-gray-800">
 
     <!-- Navigation -->
+    <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
 
-    <nav class="navbar">
-
-        <h2 class="logo">
-       <a href="index.html" class="black">  KMES Campus Canteen </a>
- 
+        <h2 class="text-xl font-bold text-orange-600">
+            <a
+                href="index.html"
+                class="transition hover:text-orange-700">
+                KMES Campus Canteen
+            </a>
         </h2>
-        
 
-
-        <a href="index.html" class="back">
+        <a
+            href="index.html"
+            class="font-medium text-gray-600 transition hover:text-orange-600">
             ← Back to Menu
         </a>
 
@@ -33,131 +33,143 @@
 
 
     <!-- Cart Page -->
+    <main class="mx-auto max-w-6xl px-6 py-12">
 
-    <main class="cart">
+        <!-- Page Heading -->
+        <div class="mb-10">
 
-        <p class="label">
-            YOUR ORDER
-        </p>
+            <p class="text-sm font-bold uppercase tracking-widest text-orange-500">
+                Your Order
+            </p>
 
-        <h1>
-            Your Cart
-        </h1>
+            <h1 class="mt-2 text-4xl font-bold text-gray-900">
+                Your Cart
+            </h1>
 
-        <p class="cart-text">
-            Review your items before placing your order.
-        </p>
+            <p class="mt-3 text-gray-500">
+                Review your items before placing your order.
+            </p>
+
+        </div>
 
 
-        <div class="cart-layout">
+        <!-- Cart Layout -->
+        <div class="grid gap-8 lg:grid-cols-3">
 
 
             <!-- LEFT SIDE -->
+            <section class="rounded-2xl bg-white p-6 shadow-md lg:col-span-2">
 
-            <section class="cart-box">
-
-                <div class="cart-heading">
+                <!-- Cart Heading -->
+                <div class="flex items-start justify-between border-b border-gray-200 pb-5">
 
                     <div>
 
-                        <h2>
+                        <h2 class="text-xl font-bold text-gray-900">
                             Your Items
                         </h2>
 
-                        <p id="cart-canteen">
+                        <p
+                            id="cart-canteen"
+                            class="mt-1 text-sm text-gray-500">
                             Canteen: -
                         </p>
 
                     </div>
 
-
-                    <span id="item-count">
+                    <span
+                        id="item-count"
+                        class="rounded-full bg-orange-100 px-3 py-1 text-sm font-semibold text-orange-600">
                         0 items
                     </span>
 
                 </div>
 
 
-                <div id="cart-items">
+                <!-- Cart Items -->
+                <div
+                    id="cart-items"
+                    class="divide-y divide-gray-100">
 
-                    <p class="empty">
+                    <p class="py-10 text-center text-gray-500">
                         Your cart is empty.
                     </p>
 
                 </div>
 
 
-                <!-- CLEAR CART -->
+                <!-- Clear Cart -->
+                <div class="mt-6 border-t border-gray-200 pt-5">
 
-                <button
-                    class="clear-cart"
-                    onclick="clearCart()">
+                    <button
+                        onclick="clearCart()"
+                        class="rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-500 transition hover:bg-red-50">
+                        Clear Cart
+                    </button>
 
-                    Clear Cart
-
-                </button>
+                </div>
 
             </section>
 
 
-
             <!-- RIGHT SIDE -->
+            <section class="h-fit rounded-2xl bg-white p-6 shadow-md">
 
-            <section class="bill">
-
-                <h2>
+                <h2 class="text-xl font-bold text-gray-900">
                     Bill Details
                 </h2>
 
 
-                <div class="bill-row">
+                <!-- Subtotal -->
+                <div class="mt-6 flex items-center justify-between text-gray-600">
 
                     <span>
                         Subtotal
                     </span>
 
-                    <span>
+                    <span class="font-medium text-gray-900">
                         ₹<span id="subtotal">0</span>
                     </span>
 
                 </div>
 
 
-                <div class="bill-row">
+                <!-- Service Fee -->
+                <div class="mt-4 flex items-center justify-between text-gray-600">
 
                     <span>
                         Service Fee
                     </span>
 
-                    <span>
+                    <span class="font-medium text-gray-900">
                         ₹0
                     </span>
 
                 </div>
 
 
-                <hr>
+                <hr class="my-5 border-gray-200">
 
 
-                <div class="bill-total">
+                <!-- Total -->
+                <div class="flex items-center justify-between">
 
-                    <span>
+                    <span class="text-lg font-bold text-gray-900">
                         Total
                     </span>
 
-                    <strong>
+                    <strong class="text-2xl font-bold text-orange-600">
                         ₹<span id="total">0</span>
                     </strong>
 
                 </div>
 
 
+                <!-- Checkout -->
                 <button
-                    class="checkout"
-                    onclick="goToCheckout()">
-
+                    onclick="goToCheckout()"
+                    class="mt-6 w-full rounded-xl bg-orange-500 px-5 py-3 font-bold text-white transition hover:bg-orange-600 active:scale-[0.98]">
                     Proceed to Checkout
-
                 </button>
 
             </section>

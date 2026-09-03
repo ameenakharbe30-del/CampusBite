@@ -8,35 +8,46 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="src/output.css">
 
     <title>Order Details - KMES Campus Canteen</title>
 
 </head>
 
 
-<body>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
 
 
     <!-- =========================
          NAVIGATION
     ========================== -->
 
-    <nav class="navbar">
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
 
-        <h2 class="logo">
+        <div class="max-w-6xl mx-auto px-6 py-4
+                    flex items-center justify-between">
 
-            <a href="index.html" class="black">
-                KMES Campus Canteen
+            <h2 class="text-2xl font-bold text-orange-600">
+
+                <a href="index.html"
+                   class="hover:text-orange-700 transition">
+
+                    KMES Campus Canteen
+
+                </a>
+
+            </h2>
+
+
+            <a href="index.html"
+               class="text-gray-600 font-medium
+                      hover:text-orange-600 transition">
+
+                ← Back to Home
+
             </a>
 
-        </h2>
-
-
-        <a href="index.html" class="back">
-            ← Back to Home
-        </a>
+        </div>
 
     </nav>
 
@@ -46,29 +57,44 @@
          ORDER DETAILS PAGE
     ========================== -->
 
-    <main class="order-page">
+    <main class="max-w-4xl mx-auto px-6 py-10">
 
 
         <!-- SUCCESS MESSAGE -->
 
-        <div class="order-success">
+        <div class="text-center mb-10">
 
-            <div class="success-icon">
+            <div class="w-20 h-20 mx-auto mb-5
+                        bg-green-100
+                        text-green-600
+                        rounded-full
+                        flex items-center justify-center
+                        text-4xl font-bold">
+
                 ✓
+
             </div>
 
 
-            <p class="label">
+            <p class="text-sm font-semibold
+                      tracking-widest
+                      text-orange-600 mb-2">
+
                 ORDER CONFIRMED
+
             </p>
 
 
-            <h1>
+            <h1 class="text-4xl font-bold
+                       text-gray-900 mb-3">
+
                 Your Order is Placed!
+
             </h1>
 
 
-            <p class="order-message">
+            <p class="text-gray-500 text-lg
+                      max-w-2xl mx-auto">
 
                 Thank you for ordering from the canteen.
                 Your order has been successfully placed.
@@ -83,26 +109,44 @@
              ORDER INFORMATION
         ========================== -->
 
-        <section class="order-card">
+        <section class="bg-white
+                        border border-gray-200
+                        rounded-2xl
+                        shadow-sm
+                        p-6 sm:p-8 mb-6">
 
-            <h2>
+            <h2 class="text-2xl font-bold
+                       text-gray-900 mb-6">
+
                 Order Details
+
             </h2>
 
 
-            <div class="order-info">
+            <div class="grid grid-cols-1
+                        sm:grid-cols-2
+                        gap-6">
 
 
                 <!-- ORDER ID -->
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Order ID
+
                     </span>
 
-                    <strong id="order-id">
+                    <strong id="order-id"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -113,12 +157,21 @@
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Canteen
+
                     </span>
 
-                    <strong id="canteen">
+                    <strong id="canteen"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -129,12 +182,21 @@
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Customer
+
                     </span>
 
-                    <strong id="customer">
+                    <strong id="customer"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -145,12 +207,21 @@
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Phone
+
                     </span>
 
-                    <strong id="phone">
+                    <strong id="phone"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -161,12 +232,21 @@
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Order Type
+
                     </span>
 
-                    <strong id="order-type">
+                    <strong id="order-type"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -177,12 +257,21 @@
 
                 <div>
 
-                    <span>
+                    <span class="block text-xs
+                                 font-semibold
+                                 uppercase
+                                 tracking-wide
+                                 text-gray-400 mb-1">
+
                         Payment
+
                     </span>
 
-                    <strong id="payment">
+                    <strong id="payment"
+                            class="text-gray-900">
+
                         -
+
                     </strong>
 
                 </div>
@@ -198,36 +287,52 @@
              ITEMS ORDERED
         ========================== -->
 
-        <section class="order-card">
+        <section class="bg-white
+                        border border-gray-200
+                        rounded-2xl
+                        shadow-sm
+                        p-6 sm:p-8 mb-6">
 
 
-            <h2>
+            <h2 class="text-2xl font-bold
+                       text-gray-900 mb-6">
+
                 Items Ordered
+
             </h2>
 
 
             <div id="order-items">
 
-                <p>
+                <p class="text-gray-500">
+
                     No items found.
+
                 </p>
 
             </div>
 
 
-            <hr>
+            <hr class="border-gray-200 my-5">
 
 
             <!-- TOTAL -->
 
-            <div class="order-total">
+            <div class="flex items-center
+                        justify-between">
 
-                <span>
+                <span class="text-lg
+                             font-semibold
+                             text-gray-700">
+
                     Total Amount
+
                 </span>
 
 
-                <strong>
+                <strong class="text-2xl
+                               font-bold
+                               text-orange-600">
 
                     ₹<span id="order-total">
                         0
@@ -246,11 +351,21 @@
              BUTTONS
         ========================== -->
 
-        <div class="order-buttons">
+        <div class="flex flex-col sm:flex-row
+                    gap-4">
 
 
             <a href="index.html"
-               class="home-button">
+               class="flex-1
+                      text-center
+                      bg-orange-500
+                      hover:bg-orange-600
+                      text-white
+                      font-semibold
+                      py-3.5 px-6
+                      rounded-xl
+                      transition
+                      shadow-sm">
 
                 Back to Home
 
@@ -258,7 +373,16 @@
 
 
             <a href="orders.html"
-               class="orders-button">
+               class="flex-1
+                      text-center
+                      bg-white
+                      hover:bg-gray-50
+                      text-gray-800
+                      font-semibold
+                      py-3.5 px-6
+                      rounded-xl
+                      border border-gray-300
+                      transition">
 
                 My Orders
 
@@ -419,8 +543,7 @@
 
 
                         itemDiv.className =
-                            "ordered-item";
-
+                            "border-b border-gray-100";
 
 
                         /*
@@ -439,22 +562,24 @@
 
                         itemDiv.innerHTML = `
 
-                            <div style="
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                padding: 12px 0;
-                                font-size: 17px;
-                            ">
+                            <div class="flex
+                                        items-center
+                                        justify-between
+                                        py-3
+                                        text-base">
 
-                                <span>
+                                <span class="text-gray-700">
+
                                     ${item.name}
                                     ×
                                     ${item.quantity}
+
                                 </span>
 
-                                <strong>
+                                <strong class="text-gray-900">
+
                                     ₹${itemTotal.toFixed(2)}
+
                                 </strong>
 
                             </div>
@@ -484,8 +609,10 @@
 
                 itemsContainer.innerHTML = `
 
-                    <p>
+                    <p class="text-gray-500">
+
                         No items found.
+
                     </p>
 
                 `;

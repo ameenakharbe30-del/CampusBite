@@ -4,40 +4,99 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="src/output.css">
 
     <title>Order Placed - KMES Canteen</title>
 
 </head>
 
-<body>
+<body class="bg-gray-50 min-h-screen">
 
-    <div class="success-page">
+    <div class="min-h-screen flex items-center justify-center
+                px-6 py-10">
 
-        <div class="success-card">
+        <div class="bg-white w-full max-w-lg
+                    rounded-3xl shadow-lg
+                    border border-gray-200
+                    p-8 sm:p-10 text-center">
 
-            <div class="success-image">
+
+            <!-- Success Icon -->
+
+            <div class="w-24 h-24 mx-auto mb-6
+                        bg-orange-100
+                        rounded-full
+                        flex items-center justify-center
+                        text-5xl">
+
                 👨‍🍳
+
             </div>
 
-            <h1>
+
+            <!-- Heading -->
+
+            <h1 class="text-3xl sm:text-4xl
+                       font-bold text-gray-900 mb-3">
+
                 Order Placed Successfully
+
             </h1>
 
-            <p class="success-subtitle">
-                Have a delicious food
+
+            <!-- Subtitle -->
+
+            <p class="text-gray-500 text-lg mb-6">
+
+                Have a delicious food 🍴
+
             </p>
 
-            <p class="order-id">
-                Order ID:
-                <strong id="order-id">#105</strong>
-            </p>
+
+            <!-- Order ID -->
+
+            <div class="bg-gray-50
+                        border border-gray-200
+                        rounded-xl
+                        px-5 py-4 mb-7">
+
+                <p class="text-sm text-gray-500 mb-1">
+
+                    Order ID
+
+                </p>
+
+                <strong id="order-id"
+                        class="text-xl font-bold
+                               text-orange-600">
+
+                    #105
+
+                </strong>
+
+            </div>
+
+
+            <!-- View Order Button -->
 
             <button
-                class="view-order"
-                onclick="viewOrder()">
+                onclick="viewOrder()"
+                class="w-full
+                       bg-orange-500
+                       hover:bg-orange-600
+                       text-white
+                       font-semibold
+                       py-3.5
+                       px-6
+                       rounded-xl
+                       transition
+                       duration-200
+                       shadow-sm
+                       hover:shadow-md">
 
                 View Order Details
 

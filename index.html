@@ -2,155 +2,181 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/output.css">
 
     <title>KMES Campus Canteen</title>
-
 </head>
 
-<body>
+<body class="bg-gray-50 text-gray-800">
 
-<div id="message-box" class="message-box"></div>
+    <!-- Message Box -->
+    <div
+        id="message-box"
+        class="fixed top-20 left-1/2 z-50 hidden -translate-x-1/2 rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white shadow-lg">
+    </div>
+
 
     <!-- Navigation -->
-`
- <nav class="navbar">
+    <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
 
-    <h2 class="logo">
-        KMES Canteen
-    </h2>
+        <h2 class="text-xl font-bold text-orange-600">
+            KMES Canteen
+        </h2>
 
-    <a href="orders.html" class="orders-link">
-        My Orders
-    </a>
+        <div class="flex items-center gap-6">
 
-    <a href="cart.html" class="cart-link">
-        🛒 Cart <span id="cart-count">0</span>
-    </a>
+            <a
+                href="orders.html"
+                class="font-medium text-gray-700 transition hover:text-orange-600">
+                My Orders
+            </a>
 
-</nav>
+            <a
+                href="cart.html"
+                class="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600">
+                🛒 Cart
+                <span
+                    id="cart-count"
+                    class="ml-1 rounded-full bg-white px-2 py-0.5 text-sm text-orange-600">
+                    0
+                </span>
+            </a>
 
+        </div>
+
+    </nav>
 
 
     <!-- Hero -->
-
-    <section class="hero">
+    <section class="w-full overflow-hidden">
 
         <img
             src="canteenn.png"
             alt="KMES Canteen"
-            class="canteen-img"
+            class="h-64 w-full object-cover sm:h-80 md:h-96"
         >
 
     </section>
 
 
-
     <!-- Choose Canteen -->
+    <section
+        id="canteens"
+        class="mx-auto max-w-6xl px-6 py-16">
 
-    <section id="canteens" class="choose-page">
+        <!-- Heading -->
+        <div class="text-center">
 
-        <p class="section-label">
-            WELCOME
-        </p>
+            <p class="mb-2 text-sm font-bold uppercase tracking-widest text-orange-500">
+                Welcome
+            </p>
 
-        <h1>
-            Choose Your Canteen
-        </h1>
+            <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">
+                Choose Your Canteen
+            </h1>
 
-        <p class="choose-text">
-            Select a canteen to explore today's menu
-            and place your order.
-        </p>
+            <p class="mx-auto mt-4 max-w-xl text-gray-600">
+                Select a canteen to explore today's menu
+                and place your order.
+            </p>
+
+        </div>
 
 
-        <div class="canteen-container">
+        <!-- Canteen Cards -->
+        <div class="mt-12 grid gap-8 md:grid-cols-2">
 
 
             <!-- KMES Canteen -->
+            <div
+                class="rounded-2xl bg-white p-8 text-center shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
-            <div class="canteen-card">
-
-                <div class="canteen-icon">
+                <div
+                    class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-3xl">
                     🍔
                 </div>
 
-                <p class="section-label">
-                    CANTEEN 01
+                <p class="text-sm font-bold uppercase tracking-widest text-orange-500">
+                    Canteen 01
                 </p>
 
-                <h2>
+                <h2 class="mt-2 text-2xl font-bold text-gray-900">
                     KMES Canteen
                 </h2>
 
-                <p>
+                <p class="mx-auto mt-4 max-w-md text-gray-600">
                     Snacks, drinks and quick bites
                     available at KMES Canteen.
                 </p>
 
-                <a href="kmes.html" class="canteen-button">
+                <a
+                    href="kmes.html"
+                    class="mt-6 inline-block rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-600">
                     View Menu →
                 </a>
 
             </div>
 
 
-
             <!-- GM College Canteen -->
+            <div
+                class="rounded-2xl bg-white p-8 text-center shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
-            <div class="canteen-card">
-
-                <div class="canteen-icon">
+                <div
+                    class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 text-3xl">
                     🥪
                 </div>
 
-                <p class="section-label">
-                    CANTEEN 02
+                <p class="text-sm font-bold uppercase tracking-widest text-orange-500">
+                    Canteen 02
                 </p>
 
-                <h2>
+                <h2 class="mt-2 text-2xl font-bold text-gray-900">
                     GM College Canteen
                 </h2>
 
-                <p>
+                <p class="mx-auto mt-4 max-w-md text-gray-600">
                     Snacks, beverages and favourites
                     available at GM College Canteen.
                 </p>
 
-                <a href="gm.html" class="canteen-button">
+                <a
+                    href="gm.html"
+                    class="mt-6 inline-block rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-600">
                     View Menu →
                 </a>
 
             </div>
-
 
         </div>
 
     </section>
 
 
-
     <!-- Footer -->
+    <footer class="bg-gray-900 px-6 py-10 text-center text-white">
 
-   <footer>
-    <div class="footer-content">
+        <div class="mx-auto max-w-4xl">
 
-        <h3>KMES Campus Canteen</h3>
+            <h3 class="text-xl font-bold">
+                KMES Campus Canteen
+            </h3>
 
-        <p>
-            A simple and convenient way to order food on campus.
-        </p>
+            <p class="mt-3 text-gray-400">
+                A simple and convenient way to order food on campus.
+            </p>
 
-        <p class="footer-bottom">
-            © 2026 KMES Campus Canteen | All Rights Reserved
-        </p>
+            <p class="mt-6 border-t border-gray-700 pt-6 text-sm text-gray-500">
+                © 2026 KMES Campus Canteen | All Rights Reserved
+            </p>
 
-    </div>
-</footer>
+        </div>
+
+    </footer>
+
 
     <script src="script.js"></script>
 

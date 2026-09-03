@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
 import json
 
 from .models import Canteen, MenuItem, Order, OrderItem
@@ -519,5 +520,155 @@ def update_order_status(request):
             {
                 "error": str(e)
             },
+            status=500
+        )
+    
+
+
+
+
+
+# ===============================
+# STAFF LOGIN
+# ===============================
+
+# ===============================
+# STAFF LOGIN
+# ===============================
+
+@csrf_exempt
+def staff_login(request):
+
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": "Only POST requests are allowed"},
+            status=405
+        )
+
+    try:
+
+        data = json.loads(request.body)
+
+        username = data.get("username")
+        password = data.get("password")
+        canteen_name = data.get("canteen")
+
+
+        if not username or not password or not canteen_name:
+
+            return JsonResponse(
+                {"error": "Please fill all login details"},
+                status=400
+            )
+
+
+        # ===============================
+        # KMES STAFF
+        # ===============================
+
+        if (
+            username == "kmes_staff"
+            and password == "kmes123"
+            and canteen_name == "KMES Canteen"
+        ):
+
+            return JsonResponse({
+
+                "success": True,
+
+                "canteen": "KMES Canteen",
+
+                "redirect": "worker-home.html"
+
+            })
+
+
+        # ===============================
+        # GM STAFF
+        # ===============================
+
+        if (
+            username == "gm_staff"
+            and password == "gm123"
+            and canteen_name == "GM College Canteen"
+        ):
+
+            return JsonResponse({
+
+                "success": True,
+
+                "canteen": "GM College Canteen",
+
+                "redirect": "gm-worker-home.html"
+
+            })
+
+
+        return JsonResponse(
+            {"error": "Invalid username, password or canteen"},
+            status=401
+        )
+
+
+    except Exception as e:
+
+        return JsonResponse(
+            {"error": str(e)},
+            status=500
+        )
+
+
+
+
+
+
+# ===============================
+# STUDENT LOGIN
+# ===============================
+
+@csrf_exempt
+def student_login(request):
+
+    if request.method != "POST":
+        return JsonResponse(
+            {"error": "Only POST requests are allowed"},
+            status=405
+        )
+
+    try:
+        data = json.loads(request.body)
+
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            return JsonResponse(
+                {"error": "Please enter username and password"},
+                status=400
+            )
+
+        # Check Django user
+        user = authenticate(
+            username=username,
+            password=password
+        )
+
+        if user is not None:
+
+            return JsonResponse({
+                "success": True,
+                "username": user.username,
+                "redirect": "index.html"
+            })
+
+        return JsonResponse(
+            {"error": "Invalid username or password"},
+            status=401
+        )
+
+    except Exception as e:
+
+        return JsonResponse(
+            {"error": str(e)},
             status=500
         )

@@ -8,69 +8,382 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          href="style.css">
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="src/output.css">
 
-<title>GM Canteen Staff Home</title>
+    <title>GM Canteen Staff Dashboard</title>
 
 </head>
 
-<body>
 
-    <!-- Navbar -->
-
-    <nav class="navbar">
-
-        <h2 class="logo">
-    GM Canteen Staff Dashboard
-</h2>
-    </nav>
+<body class="min-h-screen bg-gray-50 text-gray-800">
 
 
-    <!-- Worker Home -->
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
-    <main class="orders-page">
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
 
-        <p class="label">
-            GM COLLEGE CANTEEN
-        </p>
+        <div class="max-w-7xl mx-auto px-6 py-4
+                    flex items-center justify-between">
 
-        <h1>
-            Worker Home
-        </h1>
+            <!-- Logo / Title -->
 
-        <p class="orders-text">
-            Manage incoming GM College Canteen orders.
-        </p>
+            <div class="flex items-center gap-3">
+
+                <div class="w-11 h-11
+                            bg-orange-100
+                            rounded-xl
+                            flex items-center justify-center
+                            text-2xl">
+
+                    🍴
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-xl font-bold text-gray-900">
+                        GM Canteen
+                    </h2>
+
+                    <p class="text-xs text-gray-500">
+                        Staff Dashboard
+                    </p>
+
+                </div>
+
+            </div>
 
 
-        <!-- View Orders -->
-
-        <div class="order-box">
-
-            <h2>
-                Orders
-            </h2>
-
-            <p>
-                View and manage customer orders.
-            </p>
+            <!-- Logout -->
 
             <button
-                class="status-button"
-                onclick="window.location.href='gm-worker.html'">
+                onclick="logoutStaff()"
+                class="flex items-center gap-2
+                       px-4 py-2
+                       rounded-lg
+                       border border-gray-200
+                       text-gray-600
+                       font-medium
+                       hover:bg-red-50
+                       hover:text-red-600
+                       hover:border-red-200
+                       transition">
 
-                View Orders
+                <span>↪</span>
+
+                Logout
 
             </button>
 
         </div>
 
+    </nav>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+
+
+        <!-- Welcome Section -->
+
+        <div class="mb-10">
+
+            <div class="flex items-center gap-2 mb-3">
+
+                <span class="w-2 h-2
+                             rounded-full
+                             bg-green-500">
+
+                </span>
+
+                <p class="text-sm font-semibold
+                          tracking-widest
+                          text-orange-600">
+
+                    GM COLLEGE CANTEEN
+
+                </p>
+
+            </div>
+
+
+            <h1 class="text-4xl sm:text-5xl
+                       font-bold
+                       text-gray-900
+                       mb-3">
+
+                Staff Dashboard
+
+            </h1>
+
+
+            <p class="text-lg text-gray-500 max-w-2xl">
+
+                Welcome back! Manage and track incoming
+                customer orders from the GM College Canteen.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             DASHBOARD CARD
+        ========================== -->
+
+        <div class="grid grid-cols-1
+                    lg:grid-cols-3
+                    gap-6">
+
+
+            <!-- Orders Card -->
+
+            <div class="lg:col-span-2
+                        bg-white
+                        rounded-2xl
+                        border border-gray-200
+                        shadow-sm
+                        p-7
+                        hover:shadow-md
+                        transition">
+
+
+                <!-- Icon -->
+
+                <div class="w-14 h-14
+                            bg-orange-100
+                            rounded-2xl
+                            flex items-center justify-center
+                            text-3xl mb-6">
+
+                    📋
+
+                </div>
+
+
+                <p class="text-sm font-medium
+                          text-orange-600 mb-2">
+
+                    ORDER MANAGEMENT
+
+                </p>
+
+
+                <h2 class="text-2xl font-bold
+                           text-gray-900 mb-3">
+
+                    Customer Orders
+
+                </h2>
+
+
+                <p class="text-gray-500
+                          leading-relaxed
+                          mb-7 max-w-xl">
+
+                    View incoming orders, check order details,
+                    and update the status as orders are prepared
+                    and completed.
+
+                </p>
+
+
+                <button
+                    onclick="window.location.href='gm-worker.html'"
+                    class="inline-flex items-center gap-2
+                           bg-orange-500
+                           hover:bg-orange-600
+                           text-white
+                           font-semibold
+                           px-6 py-3
+                           rounded-xl
+                           shadow-sm
+                           hover:shadow-md
+                           transition">
+
+                    View Orders
+
+                    <span class="text-lg">
+                        →
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- Quick Info Card -->
+
+            <div class="bg-gray-900
+                        rounded-2xl
+                        p-7
+                        text-white
+                        shadow-sm">
+
+
+                <div class="w-12 h-12
+                            bg-white/10
+                            rounded-xl
+                            flex items-center justify-center
+                            text-2xl mb-6">
+
+                    🏫
+
+                </div>
+
+
+                <p class="text-sm
+                          text-orange-400
+                          font-semibold
+                          tracking-wide
+                          mb-2">
+
+                    STAFF PORTAL
+
+                </p>
+
+
+                <h2 class="text-2xl
+                           font-bold
+                           mb-4">
+
+                    GM College Canteen
+
+                </h2>
+
+
+                <p class="text-gray-300
+                          leading-relaxed">
+
+                    This dashboard is dedicated to managing
+                    orders received by the GM College Canteen.
+
+                </p>
+
+
+                <div class="mt-7
+                            pt-5
+                            border-t
+                            border-white/10">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="w-2.5 h-2.5
+                                     rounded-full
+                                     bg-green-400">
+
+                        </span>
+
+                        <span class="text-sm
+                                     text-gray-300">
+
+                            Staff portal active
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             INFORMATION SECTION
+        ========================== -->
+
+        <div class="mt-8
+                    bg-orange-50
+                    border border-orange-100
+                    rounded-2xl
+                    p-6
+                    flex flex-col sm:flex-row
+                    gap-4
+                    sm:items-center">
+
+            <div class="w-12 h-12
+                        shrink-0
+                        bg-orange-100
+                        rounded-xl
+                        flex items-center justify-center
+                        text-xl">
+
+                💡
+
+            </div>
+
+
+            <div>
+
+                <h3 class="font-semibold
+                           text-gray-900
+                           mb-1">
+
+                    Staff Tip
+
+                </h3>
+
+                <p class="text-sm
+                          text-gray-600">
+
+                    Check new orders regularly and keep
+                    order statuses updated so customers
+                    know when their food is ready.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
     </main>
 
 
 
-<script src="gm-worker.js"></script>
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="gm-worker.js"></script>
+
+    <script src="logout.js"></script>
+
+    <script src="staff-auth.js"></script>
+
+
+    <!-- GM Canteen Protection -->
+
+    <script>
+
+        if (
+            localStorage.getItem("staffCanteen")
+            !== "GM College Canteen"
+        ) {
+
+            window.location.href =
+                "staff-login.html";
+
+        }
+
+    </script>
+
+
 </body>
 
 </html>

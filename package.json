@@ -1,0 +1,25 @@
+{
+  "name": "canteenautomation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gm-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ameenakharbe30-del/CampusBite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ameenakharbe30-del/CampusBite/issues"
+  },
+  "homepage": "https://github.com/ameenakharbe30-del/CampusBite#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

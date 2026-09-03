@@ -8,59 +8,225 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          href="style.css">
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="src/output.css">
 
-    <title>Worker Board - KMES Campus Canteen</title>
+    <title>KMES Canteen - Staff Orders</title>
 
 </head>
 
-<body>
+<body class="bg-gray-50 min-h-screen">
 
-    <!-- Navbar -->
+    <!-- ===============================
+         NOTIFICATION
+    ================================ -->
 
-    <nav class="navbar">
+    <div id="notification"
+         class="fixed top-5 right-5 z-50
+                bg-white border border-gray-200
+                shadow-lg rounded-xl
+                px-5 py-4
+                hidden">
 
-        <h2 class="logo">
-            KMES Worker Board
-        </h2>
+        🔔
+        <span id="notification-text"
+              class="ml-2 font-medium text-gray-800">
+        </span>
 
-        <a href="worker-home.html" class="back">
-    ← Worker Home
-</a>
+    </div>
+
+
+    <!-- ===============================
+         NOTIFICATION SOUND
+    ================================ -->
+
+    <audio id="order-sound">
+        <source src="notification.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- ===============================
+         NAVBAR
+    ================================ -->
+
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+
+        <div class="max-w-7xl mx-auto
+                    px-6 py-4
+                    flex items-center
+                    justify-between">
+
+            <!-- LEFT -->
+
+            <div>
+
+                <h2 class="text-xl
+                           font-bold
+                           text-gray-900">
+
+                    KMES Canteen
+
+                </h2>
+
+                <p class="text-sm
+                          text-gray-500">
+
+                    Staff Order Board
+
+                </p>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <a href="worker-home.html"
+               class="text-gray-700
+                      hover:text-orange-600
+                      font-medium
+                      transition">
+
+                ← Canteen Staff Home
+
+            </a>
+
+        </div>
+
     </nav>
 
 
-    <!-- Worker Board -->
+    <!-- ===============================
+         WORKER BOARD
+    ================================ -->
 
-    <main class="orders-page">
-
-        <p class="label">
-            WORKER DASHBOARD
-        </p>
-
-        <h1>
-            Orders
-        </h1>
-
-        <p class="orders-text">
-            View and manage incoming canteen orders.
-        </p>
+    <main class="max-w-6xl mx-auto
+                 px-6 py-12">
 
 
-        <!-- Orders -->
+        <!-- LABEL -->
 
-        <div id="worker-orders">
+        <div class="flex items-center gap-2 mb-4">
 
-            <p>
-                Loading orders...
+            <span class="w-2.5 h-2.5
+                         bg-green-500
+                         rounded-full">
+            </span>
+
+            <p class="text-orange-600
+                      font-semibold
+                      tracking-wider
+                      uppercase
+                      text-sm">
+
+                KMES CANTEEN
+
             </p>
+
+        </div>
+
+
+        <!-- HEADING -->
+
+        <div class="flex items-center
+                    justify-between
+                    mb-8">
+
+            <div>
+
+                <h1 class="text-5xl
+                           font-bold
+                           text-gray-900">
+
+                    Orders
+
+                </h1>
+
+                <p class="text-lg
+                          text-gray-500
+                          mt-2">
+
+                    View and manage incoming
+                    KMES Canteen orders.
+
+                </p>
+
+            </div>
+
+
+            <!-- LIVE ORDERS -->
+
+            <div class="hidden sm:flex
+                        items-center gap-2
+                        bg-white
+                        border border-gray-200
+                        shadow-sm
+                        rounded-full
+                        px-5 py-3">
+
+                <span class="w-2.5 h-2.5
+                             bg-green-400
+                             rounded-full">
+                </span>
+
+                <span class="font-medium
+                             text-gray-700">
+
+                    Live Orders
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===============================
+             ORDERS
+        ================================ -->
+
+        <div id="worker-orders"
+             class="space-y-6">
+
+            <div class="bg-white
+                        border border-gray-200
+                        rounded-2xl
+                        shadow-sm
+                        p-10
+                        text-center">
+
+                <div class="w-14 h-14
+                            mx-auto mb-4
+                            bg-orange-100
+                            rounded-xl
+                            flex items-center
+                            justify-center
+                            text-2xl">
+
+                    📋
+
+                </div>
+
+                <p class="text-gray-500">
+
+                    Loading orders...
+
+                </p>
+
+            </div>
 
         </div>
 
     </main>
 
 
+    <!-- ===============================
+         JAVASCRIPT
+    ================================ -->
+
+    <!-- Authentication first -->
+    <script src="staff-auth.js"></script>
+
+    <!-- KMES orders -->
     <script src="worker.js"></script>
 
 </body>

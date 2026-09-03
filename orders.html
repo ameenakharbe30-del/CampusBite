@@ -8,27 +8,35 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="src/output.css">
 
     <title>My Orders - KMES Canteen</title>
 
 </head>
 
-<body>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
 
 
     <!-- Navigation -->
 
-    <nav class="navbar">
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
 
-        <h2 class="logo">
-            KMES Canteen
-        </h2>
+        <div class="max-w-6xl mx-auto px-6 py-4
+                    flex items-center justify-between">
 
-        <a href="index.html" class="back">
-            ← Back to Menu
-        </a>
+            <h2 class="text-2xl font-bold text-orange-600">
+                KMES Canteen
+            </h2>
+
+            <a href="index.html"
+               class="text-gray-600 font-medium
+                      hover:text-orange-600 transition">
+
+                ← Back to Menu
+
+            </a>
+
+        </div>
 
     </nav>
 
@@ -36,27 +44,39 @@
 
     <!-- Orders -->
 
-    <main class="orders-page">
+    <main class="max-w-6xl mx-auto px-6 py-10">
 
-        <p class="label">
+
+        <!-- Page Heading -->
+
+        <p class="text-sm font-semibold
+                  tracking-widest text-orange-600 mb-2">
+
             YOUR ORDERS
+
         </p>
 
-        <h1>
+
+        <h1 class="text-4xl font-bold text-gray-900 mb-3">
+
             My Orders
+
         </h1>
 
-        <p class="orders-text">
+
+        <p class="text-gray-500 mb-8">
+
             Track your current and previous orders.
+
         </p>
 
 
 
         <!-- Orders will appear here -->
 
-        <div id="orders-list">
+        <div id="orders-list" class="space-y-6">
 
-            <p>
+            <p class="text-gray-500">
                 Loading orders...
             </p>
 
@@ -68,6 +88,7 @@
 
 
     <script src="script.js"></script>
+
 
 
     <!-- Load Orders From Django -->
@@ -90,18 +111,32 @@
 
                 container.innerHTML = `
 
-                    <div class="empty-order">
+                    <div class="bg-white border border-gray-200
+                                rounded-2xl p-10 text-center
+                                shadow-sm">
 
-                        <h2>
+                        <h2 class="text-2xl font-bold
+                                   text-gray-900 mb-2">
+
                             No orders found
+
                         </h2>
 
-                        <p>
+                        <p class="text-gray-500 mb-6">
+
                             Please place an order first.
+
                         </p>
 
-                        <a href="index.html">
+                        <a href="index.html"
+                           class="inline-block bg-orange-500
+                                  hover:bg-orange-600
+                                  text-white font-semibold
+                                  px-6 py-3 rounded-xl
+                                  transition">
+
                             Order Food
+
                         </a>
 
                     </div>
@@ -111,6 +146,7 @@
                 return;
 
             }
+
 
 
             try {
@@ -144,18 +180,33 @@
 
                     container.innerHTML = `
 
-                        <div class="empty-order">
+                        <div class="bg-white border border-gray-200
+                                    rounded-2xl p-10 text-center
+                                    shadow-sm">
 
-                            <h2>
+                            <h2 class="text-2xl font-bold
+                                       text-gray-900 mb-2">
+
                                 No orders yet
+
                             </h2>
 
-                            <p>
+                            <p class="text-gray-500 mb-6">
+
                                 Your placed orders will appear here.
+
                             </p>
 
-                            <a href="index.html">
+                            <a href="index.html"
+                               class="inline-block
+                                      bg-orange-500
+                                      hover:bg-orange-600
+                                      text-white font-semibold
+                                      px-6 py-3 rounded-xl
+                                      transition">
+
                                 Order Food
+
                             </a>
 
                         </div>
@@ -176,8 +227,10 @@
                     const orderCard =
                         document.createElement("div");
 
+
                     orderCard.className =
-                        "order-card";
+                        "bg-white border border-gray-200 " +
+                        "rounded-2xl shadow-sm overflow-hidden";
 
 
                     let itemsHTML = "";
@@ -188,18 +241,25 @@
 
                             itemsHTML += `
 
-                                <div class="order-item">
+                                <div class="flex items-center
+                                            justify-between
+                                            py-3 border-b
+                                            border-gray-100">
 
-                                    <span>
+                                    <span class="text-gray-700">
+
                                         ${item.name}
                                         × ${item.quantity}
+
                                     </span>
 
-                                    <strong>
+                                    <strong class="text-gray-900">
+
                                         ₹${(
                                             item.price *
                                             item.quantity
                                         ).toFixed(2)}
+
                                     </strong>
 
                                 </div>
@@ -210,127 +270,257 @@
                     );
 
 
+
                     orderCard.innerHTML = `
 
-                        <div class="order-header">
+                        <!-- Order Header -->
+
+                        <div class="px-6 py-5
+                                    bg-gray-50
+                                    border-b border-gray-200
+                                    flex flex-col sm:flex-row
+                                    sm:items-center
+                                    sm:justify-between
+                                    gap-3">
 
                             <div>
 
-                                <span>
+                                <span class="text-sm
+                                             text-gray-500">
+
                                     Order ID
+
                                 </span>
 
-                                <h2>
+                                <h2 class="text-xl font-bold
+                                           text-gray-900">
+
                                     #${order.id}
+
                                 </h2>
 
                             </div>
 
 
-                            <div>
+                            <div class="text-sm
+                                        text-gray-500">
 
-                                <span>
-                                    ${order.created_at}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="order-info">
-
-                            <div>
-
-                                <span>
-                                    Canteen
-                                </span>
-
-                                <strong>
-                                    ${order.canteen}
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    Customer
-                                </span>
-
-                                <strong>
-                                    ${order.customer_name}
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    Pickup Location
-                                </span>
-
-                                <strong>
-                                    ${order.location}
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    Payment
-                                </span>
-
-                                <strong>
-                                    ${order.payment}
-                                </strong>
+                                ${order.created_at}
 
                             </div>
 
                         </div>
 
 
-                        <div class="order-items">
 
-                            <h3>
-                                Items
-                            </h3>
+                        <!-- Order Information -->
 
-                            ${itemsHTML}
+                        <div class="p-6">
+
+                            <div class="grid grid-cols-1
+                                        sm:grid-cols-2
+                                        lg:grid-cols-4
+                                        gap-5 mb-6">
+
+
+                                <!-- Canteen -->
+
+                                <div>
+
+                                    <span class="block
+                                                 text-xs
+                                                 font-semibold
+                                                 uppercase
+                                                 tracking-wide
+                                                 text-gray-400
+                                                 mb-1">
+
+                                        Canteen
+
+                                    </span>
+
+                                    <strong class="text-gray-900">
+
+                                        ${order.canteen}
+
+                                    </strong>
+
+                                </div>
+
+
+
+                                <!-- Customer -->
+
+                                <div>
+
+                                    <span class="block
+                                                 text-xs
+                                                 font-semibold
+                                                 uppercase
+                                                 tracking-wide
+                                                 text-gray-400
+                                                 mb-1">
+
+                                        Customer
+
+                                    </span>
+
+                                    <strong class="text-gray-900">
+
+                                        ${order.customer_name}
+
+                                    </strong>
+
+                                </div>
+
+
+
+                                <!-- Pickup Location -->
+
+                                <div>
+
+                                    <span class="block
+                                                 text-xs
+                                                 font-semibold
+                                                 uppercase
+                                                 tracking-wide
+                                                 text-gray-400
+                                                 mb-1">
+
+                                        Pickup Location
+
+                                    </span>
+
+                                    <strong class="text-gray-900">
+
+                                        ${order.location}
+
+                                    </strong>
+
+                                </div>
+
+
+
+                                <!-- Payment -->
+
+                                <div>
+
+                                    <span class="block
+                                                 text-xs
+                                                 font-semibold
+                                                 uppercase
+                                                 tracking-wide
+                                                 text-gray-400
+                                                 mb-1">
+
+                                        Payment
+
+                                    </span>
+
+                                    <strong class="text-gray-900">
+
+                                        ${order.payment}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- Items -->
+
+                            <div class="border-t
+                                        border-gray-200
+                                        pt-5">
+
+                                <h3 class="text-lg font-semibold
+                                           text-gray-900 mb-3">
+
+                                    Items
+
+                                </h3>
+
+
+                                <div>
+
+                                    ${itemsHTML}
+
+                                </div>
+
+                            </div>
 
                         </div>
 
 
-                        <div class="order-footer">
+
+                        <!-- Order Footer -->
+
+                        <div class="px-6 py-5
+                                    bg-gray-50
+                                    border-t border-gray-200
+                                    flex flex-col sm:flex-row
+                                    sm:items-center
+                                    sm:justify-between
+                                    gap-4">
+
+
+                            <!-- Status -->
 
                             <div>
 
-                                <span>
+                                <span class="block text-xs
+                                             font-semibold
+                                             uppercase
+                                             tracking-wide
+                                             text-gray-400
+                                             mb-1">
+
                                     Status
+
                                 </span>
 
-                                <strong class="status">
+                                <strong class="inline-block
+                                               px-3 py-1
+                                               rounded-full
+                                               bg-orange-100
+                                               text-orange-700
+                                               text-sm">
+
                                     ${order.status}
+
                                 </strong>
 
                             </div>
 
 
-                            <div>
 
-                                <span>
+                            <!-- Total -->
+
+                            <div class="sm:text-right">
+
+                                <span class="block text-xs
+                                             font-semibold
+                                             uppercase
+                                             tracking-wide
+                                             text-gray-400
+                                             mb-1">
+
                                     Total
+
                                 </span>
 
-                                <strong class="order-price">
+                                <strong class="text-2xl
+                                               font-bold
+                                               text-orange-600">
+
                                     ₹${order.total.toFixed(2)}
+
                                 </strong>
 
                             </div>
+
 
                         </div>
 
@@ -354,15 +544,22 @@
 
                 container.innerHTML = `
 
-                    <div class="empty-order">
+                    <div class="bg-white border border-red-200
+                                rounded-2xl p-10 text-center
+                                shadow-sm">
 
-                        <h2>
+                        <h2 class="text-2xl font-bold
+                                   text-gray-900 mb-2">
+
                             Unable to load orders
+
                         </h2>
 
-                        <p>
+                        <p class="text-gray-500">
+
                             Please make sure the Django
                             server is running.
+
                         </p>
 
                     </div>

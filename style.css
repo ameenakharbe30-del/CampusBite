@@ -1780,3 +1780,32 @@ footer p {
     }
 
 }
+
+
+
+
+
+
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    background: white;
+    padding: 18px 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 9999;
+    display: none;
+}
+
+.notification.show {
+    display: block;
+}
+
+
+
+
+
+

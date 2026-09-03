@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="staff-login.css">
+
+    <title>Staff Portal | KMES Campus Canteen</title>
+
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- Left Side -->
+
+        <section class="login-brand">
+
+            <div class="brand-content">
+
+                <div class="brand-icon">
+                    🍽️
+                </div>
+
+                <h1>
+                    KMES Campus<br>
+                    Canteen
+                </h1>
+
+                <p>
+                    Staff Management Portal
+                </p>
+
+                <div class="brand-line"></div>
+
+                <span>
+                    Manage orders. Serve faster.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- Right Side -->
+
+        <section class="login-section">
+
+            <div class="login-container">
+
+                <div class="mobile-logo">
+                    🍽️
+                </div>
+
+                <p class="login-label">
+                    STAFF PORTAL
+                </p>
+
+                <h2>
+                    Welcome back
+                </h2>
+
+                <p class="login-subtitle">
+                    Sign in to manage your canteen orders.
+                </p>
+
+
+                <!-- Canteen -->
+
+                <div class="form-group">
+
+                    <label for="canteen">
+                        Canteen
+                    </label>
+
+                    <select id="canteen">
+
+                        <option value="">
+                            Select your canteen
+                        </option>
+
+                        <option value="KMES Canteen">
+                            KMES Canteen
+                        </option>
+
+                        <option value="GM College Canteen">
+                            GM College Canteen
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Username -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                    </div>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Error -->
+
+                <p id="login-message" class="login-message"></p>
+
+
+                <!-- Login -->
+
+                <button
+                    type="button"
+                    class="login-button"
+                    onclick="staffLogin()"
+                >
+                    Sign In
+                </button>
+
+
+                <p class="security-text">
+                    🔒 Authorized staff only
+                </p>
+
+
+                <a href="index.html" class="customer-link">
+                    ← Back to Customer Site
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="staff-login.js"></script>
+
+</body>
+</html>

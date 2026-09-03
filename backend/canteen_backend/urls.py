@@ -8,8 +8,12 @@ from orders.views import (
     create_order,
     my_orders,
     worker_orders,
-    update_order_status
+    update_order_status,
+    staff_login,
+    student_login
 )
+
+
 
 
 def home(request):
@@ -63,5 +67,14 @@ urlpatterns = [
         "api/update-order-status/",
         update_order_status
     ),
+
+    path(
+    "api/staff-login/",
+    staff_login
+),
+    path(
+    "api/student-login/",
+    student_login
+),
 
 ]

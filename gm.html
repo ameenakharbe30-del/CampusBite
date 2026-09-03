@@ -2,46 +2,50 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet"
-          href="style.css">
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="src/output.css">
 
     <title>GM College Canteen</title>
-
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-50 text-gray-800">
 
 
     <!-- Navbar -->
+    <nav class="sticky top-0 z-40 flex items-center justify-between bg-white px-6 py-4 shadow-md">
 
-    <nav class="navbar">
+        <h2 class="text-xl font-bold text-orange-600">
 
-        <h2 class="logo">
-
-            <a href="index.html" class="black">
+            <a
+                href="index.html"
+                class="transition hover:text-orange-700">
                 GM College Canteen
             </a>
 
         </h2>
 
 
-        <div class="nav-right">
+        <div class="flex items-center gap-6">
 
-            <a href="orders.html" class="orders-link">
+            <a
+                href="orders.html"
+                class="font-medium text-gray-700 transition hover:text-orange-600">
                 My Orders
             </a>
 
-            <a href="cart.html" class="cart-link">
+
+            <a
+                href="cart.html"
+                class="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600">
 
                 🛒 Cart
 
-                <span id="cart-count">
+                <span
+                    id="cart-count"
+                    class="ml-1 rounded-full bg-white px-2 py-0.5 text-sm text-orange-600">
                     0
                 </span>
 
@@ -52,60 +56,54 @@
     </nav>
 
 
-
     <!-- Menu Heading -->
+    <section class="mx-auto max-w-6xl px-6 pb-4 pt-12">
 
-    <section class="menu-top">
-
-        <p class="section-label">
-            GM COLLEGE CANTEEN
+        <p class="text-sm font-bold uppercase tracking-widest text-orange-500">
+            GM College Canteen
         </p>
 
-        <h1>
+        <h1 class="mt-2 text-3xl font-bold text-gray-900 sm:text-4xl">
             Today's Menu
         </h1>
 
-        <p>
+        <p class="mt-3 text-gray-500">
             Freshly available today
         </p>
 
     </section>
 
 
-
     <!-- Menu -->
-
-    <section class="menu-section">
+    <section class="mx-auto max-w-6xl px-6 pb-16">
 
         <div
-            class="food-container"
-            id="food-container">
+            id="food-container"
+            class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-            <p>
+            <div class="col-span-full py-10 text-center text-gray-500">
                 Loading menu...
-            </p>
+            </div>
 
         </div>
 
     </section>
 
 
-
     <!-- Footer -->
+    <footer class="bg-gray-900 px-6 py-10 text-center text-white">
 
-    <footer>
+        <div class="mx-auto max-w-4xl">
 
-        <div class="footer-content">
-
-            <h3>
+            <h3 class="text-xl font-bold">
                 GM College Canteen
             </h3>
 
-            <p>
+            <p class="mt-3 text-gray-400">
                 A simple and convenient way to order food on campus.
             </p>
 
-            <p class="footer-bottom">
+            <p class="mt-6 border-t border-gray-700 pt-6 text-sm text-gray-500">
                 © 2026 GM College Canteen |
                 All Rights Reserved
             </p>
@@ -115,12 +113,11 @@
     </footer>
 
 
-
+    <!-- Existing JavaScript -->
     <script src="script.js"></script>
 
 
-    <!-- LOAD GM MENU FROM DJANGO -->
-
+    <!-- Load GM Menu From Django -->
     <script>
 
         async function loadGMMenu() {
@@ -155,9 +152,13 @@
                 if (items.length === 0) {
 
                     container.innerHTML = `
-                        <p>
+
+                        <div class="col-span-full py-10 text-center text-gray-500">
+
                             No menu items available today.
-                        </p>
+
+                        </div>
+
                     `;
 
                     return;
@@ -172,32 +173,34 @@
 
 
                     foodItem.className =
-                        "food-item";
+                        "overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl";
 
 
                     foodItem.innerHTML = `
 
-                        <div class="food-image">
+                        <!-- Food Image -->
+                        <div class="flex h-44 items-center justify-center bg-orange-50 text-6xl">
                             🍽️
                         </div>
 
 
-                        <div class="food-details">
+                        <!-- Food Details -->
+                        <div class="p-5">
 
-                            <h3>
+                            <h3 class="text-xl font-bold text-gray-900">
                                 ${item.name}
                             </h3>
 
 
-                            <div class="food-bottom">
+                            <div class="mt-5 flex items-center justify-between">
 
-                                <strong>
+                                <strong class="text-xl font-bold text-orange-600">
                                     ₹${item.price}
                                 </strong>
 
 
                                 <button
-                                    class="add-button"
+                                    class="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600 active:scale-95"
                                     onclick="addToCart(
                                         ${item.id},
                                         '${item.name}',
@@ -231,14 +234,18 @@
 
                 container.innerHTML = `
 
-                    <p>
+                    <div class="col-span-full rounded-xl bg-red-50 p-6 text-center text-red-600">
 
-                        Unable to load GM menu.
+                        <p class="font-semibold">
+                            Unable to load GM menu.
+                        </p>
 
-                        Please make sure the Django
-                        server is running.
+                        <p class="mt-1 text-sm">
+                            Please make sure the Django
+                            server is running.
+                        </p>
 
-                    </p>
+                    </div>
 
                 `;
 
@@ -250,7 +257,6 @@
         loadGMMenu();
 
     </script>
-
 
 </body>
 
